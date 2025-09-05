@@ -2,6 +2,7 @@ import type {Metadata} from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
 import { Toaster } from "@/components/ui/toaster";
+import { cn } from '@/lib/utils';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -20,7 +21,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${inter.variable} font-body antialiased`}>
+      <body className={cn(inter.variable, "font-body antialiased")}>
         {children}
         <Toaster />
       </body>
