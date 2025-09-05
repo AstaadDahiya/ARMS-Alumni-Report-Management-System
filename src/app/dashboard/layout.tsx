@@ -1,3 +1,4 @@
+
 "use client";
 
 import Link from "next/link";
@@ -45,6 +46,7 @@ const navItems = [
     label: "Mentorship",
     subItems: [
       { href: "/dashboard/mentorship", label: "Overview" },
+      { href: "/dashboard/mentorship/find-a-mentor", label: "Find a Mentor" },
       { href: "/dashboard/mentorship-requests", label: "Requests" },
     ]
   },
@@ -79,23 +81,22 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
               {navItems.map((item) => (
                 item.subItems ? (
                   <AccordionItem value={item.href} key={item.href} className="border-none">
-                    <AccordionTrigger 
-                      className="[&[data-state=open]>svg]:rotate-180 p-0"
-                      asChild
-                    >
+                    <SidebarMenuItem>
                        <SidebarMenuButton
                         asChild
                         isActive={pathname.startsWith(item.href)}
                         tooltip={{ children: item.label, side: "right", align:"center" }}
                        >
-                         <div className="flex justify-between w-full">
-                           <Link href={item.href}>
+                         <AccordionTrigger 
+                           className="[&[data-state=open]>svg]:rotate-180 p-0 w-full"
+                         >
+                           <div className="flex items-center gap-2 p-2">
                              <item.icon />
                              <span>{item.label}</span>
-                           </Link>
-                         </div>
+                           </div>
+                         </AccordionTrigger>
                        </SidebarMenuButton>
-                    </AccordionTrigger>
+                     </SidebarMenuItem>
                     <AccordionContent className="pb-0 pl-7">
                       <SidebarMenu>
                         {item.subItems.map(subItem => (
