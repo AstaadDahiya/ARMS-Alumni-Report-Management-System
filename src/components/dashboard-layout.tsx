@@ -24,7 +24,8 @@ import {
   Settings,
   CircleHelp,
   DollarSign,
-  GraduationCap
+  GraduationCap,
+  Sparkles,
 } from "lucide-react";
 
 const navItems = [
@@ -34,6 +35,7 @@ const navItems = [
   { href: "/dashboard/job-board", icon: Briefcase, label: "Job Board" },
   { href: "/dashboard/donations", icon: DollarSign, label: "Donations" },
   { href: "/dashboard/mentorship", icon: HeartHandshake, label: "Mentorship" },
+  { href: "/dashboard/career-guidance", icon: Sparkles, label: "Career Guidance" },
   { href: "/dashboard/news-and-updates", icon: Newspaper, label: "News and Updates" },
 ];
 
