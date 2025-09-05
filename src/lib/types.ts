@@ -1,3 +1,4 @@
+
 export interface Alumnus {
   id: number;
   name: string;
@@ -39,5 +40,16 @@ export interface NewsArticle {
   category: string;
   date: string;
   imageUrl: string;
+  description: string;
+}
+
+export interface Job {
+  id: number;
+  title: string;
+  company: string;
+  location: string;
+  type: 'Full-time' | 'Internship' | 'Contract';
+  industry: string;
+  postedDate: string;
   description: string;
 }

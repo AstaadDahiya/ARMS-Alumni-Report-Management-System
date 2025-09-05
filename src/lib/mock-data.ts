@@ -1,5 +1,5 @@
 
-import type { Alumnus, Event, ProfileUpdateRequest, NewsArticle } from './types';
+import type { Alumnus, Event, ProfileUpdateRequest, NewsArticle, Job } from './types';
 
 export const alumni: Alumnus[] = [
   {
@@ -189,5 +189,58 @@ export const news: NewsArticle[] = [
     date: '2024-08-05',
     imageUrl: 'https://picsum.photos/600/400?random=8',
     description: 'MAIT has inaugurated a new state-of-the-art Center for Robotics and Automation to foster research and innovation.',
+  },
+];
+
+export const jobs: Job[] = [
+  {
+    id: 1,
+    title: 'Software Development Engineer',
+    company: 'Amazon',
+    location: 'Noida, India',
+    type: 'Full-time',
+    industry: 'E-commerce',
+    postedDate: '2024-08-15',
+    description: 'Join Amazon\'s core development team to build scalable, distributed systems. Requires strong knowledge of data structures and algorithms.',
+  },
+  {
+    id: 2,
+    title: 'Data Science Intern',
+    company: 'Microsoft',
+    location: 'Hyderabad, India',
+    type: 'Internship',
+    industry: 'Technology',
+    postedDate: '2024-08-20',
+    description: 'Work on real-world data science problems, develop machine learning models, and contribute to products that impact millions of users.',
+  },
+  {
+    id: 3,
+    title: 'Business Analyst',
+    company: 'Zomato',
+    location: 'Gurugram, India',
+    type: 'Full-time',
+    industry: 'Food Tech',
+    postedDate: '2024-08-18',
+    description: 'Analyze business processes and data to provide insights that drive strategic decisions. Work cross-functionally with product and engineering teams.',
+  },
+  {
+    id: 4,
+    title: 'Marketing Intern',
+    company: 'Adobe',
+    location: 'Noida, India',
+    type: 'Internship',
+    industry: 'Software',
+    postedDate: '2024-08-22',
+    description: 'Support the marketing team in executing campaigns, creating content, and analyzing market trends for Adobe\'s creative suite.',
+  },
+  {
+    id: 5,
+    title: 'Site Reliability Engineer',
+    company: 'Google',
+    location: 'Bengaluru, India',
+    type: 'Full-time',
+    industry: 'Technology',
+    postedDate: '2024-08-12',
+    description: 'Ensure that Google\'s services are reliable and scalable. This role combines software engineering and systems administration.',
   },
 ];
