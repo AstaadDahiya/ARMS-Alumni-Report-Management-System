@@ -46,7 +46,7 @@ const secondaryNavItems = [
 export default function DashboardLayout({ children }: { children: ReactNode }) {
   const pathname = usePathname();
 
-  if (pathname === '/dashboard/student') {
+  if (pathname === '/dashboard/student' || pathname === '/dashboard/mentorship/find-a-mentor') {
     return <>{children}</>;
   }
 

@@ -8,6 +8,7 @@ import { Badge } from '@/components/ui/badge';
 import { alumni } from '@/lib/mock-data';
 import { Handshake, Search, UserPlus, ArrowRight } from 'lucide-react';
 import Image from 'next/image';
+import Link from 'next/link';
 
 const featuredMentors = alumni.slice(0, 3);
 
@@ -45,7 +46,11 @@ export default function MentorshipPage() {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <Button size="lg">Find a Mentor <ArrowRight className="ml-2 h-5 w-5" /></Button>
+            <Button size="lg" asChild>
+              <Link href="/dashboard/mentorship/find-a-mentor">
+                Find a Mentor <ArrowRight className="ml-2 h-5 w-5" />
+              </Link>
+            </Button>
           </CardContent>
         </Card>
          <Card className="text-center flex flex-col items-center justify-center p-8">
