@@ -32,13 +32,17 @@ const profileFormSchema = z.object({
 type ProfileFormValues = z.infer<typeof profileFormSchema>;
 
 // Assuming user ID 1 is the logged-in user
-const currentUser = alumni.find(a => a.id === 1) || alumni[0];
-const bio = "A passionate software engineer with over 6 years of experience in building scalable web applications. Specialized in front-end technologies like React and Next.js, with a strong focus on creating intuitive user experiences. Always eager to learn new technologies and take on challenging projects. In my free time, I enjoy contributing to open-source projects and mentoring junior developers.";
+const initialUser = alumni.find(a => a.id === 1) || alumni[0];
+const initialBio = "A passionate software engineer with over 6 years of experience in building scalable web applications. Specialized in front-end technologies like React and Next.js, with a strong focus on creating intuitive user experiences. Always eager to learn new technologies and take on challenging projects. In my free time, I enjoy contributing to open-source projects and mentoring junior developers.";
 
 
 export default function ProfilePage() {
   const [isEditing, setIsEditing] = React.useState(false);
+  const [currentUser, setCurrentUser] = React.useState(initialUser);
+  const [bio, setBio] = React.useState(initialBio);
+  
   const { toast } = useToast();
+
   const form = useForm<ProfileFormValues>({
     resolver: zodResolver(profileFormSchema),
     defaultValues: {
@@ -50,6 +54,15 @@ export default function ProfilePage() {
       skills: currentUser.skills.join(', '),
       bio: bio,
     },
+    values: { // Use values to reflect state changes in the form
+        name: currentUser.name,
+        email: currentUser.email,
+        company: currentUser.company,
+        jobTitle: currentUser.jobTitle,
+        location: currentUser.location,
+        skills: currentUser.skills.join(', '),
+        bio: bio,
+    },
     mode: "onChange",
   });
 
@@ -58,8 +71,19 @@ export default function ProfilePage() {
       title: "Profile Update Submitted",
       description: "Your changes have been sent for administrator validation.",
     });
-    // Here you would typically send the data to your backend
-    console.log(data);
+    
+    // Optimistically update the UI
+    setCurrentUser(prev => ({
+        ...prev,
+        name: data.name ?? prev.name,
+        email: data.email ?? prev.email,
+        company: data.company ?? prev.company,
+        jobTitle: data.jobTitle ?? prev.jobTitle,
+        location: data.location ?? prev.location,
+        skills: data.skills?.split(',').map(s => s.trim()) ?? prev.skills,
+    }));
+    setBio(data.bio ?? bio);
+
     setIsEditing(false);
   }
 
