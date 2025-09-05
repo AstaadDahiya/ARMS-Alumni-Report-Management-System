@@ -32,3 +32,12 @@ export interface ProfileUpdateRequest {
   newValue: string;
   requestDate: string;
 }
+
+export interface NewsArticle {
+  id: number;
+  title: string;
+  category: string;
+  date: string;
+  imageUrl: string;
+  description: string;
+}

@@ -1,5 +1,5 @@
 
-import type { Alumnus, Event, ProfileUpdateRequest } from './types';
+import type { Alumnus, Event, ProfileUpdateRequest, NewsArticle } from './types';
 
 export const alumni: Alumnus[] = [
   {
@@ -154,5 +154,40 @@ export const updateRequests: ProfileUpdateRequest[] = [
     oldValue: 'Investment Management, Risk Analysis',
     newValue: 'Investment Management, Risk Analysis, Algorithmic Trading',
     requestDate: '2024-07-26',
+  },
+];
+
+export const news: NewsArticle[] = [
+  {
+    id: 1,
+    title: 'University Opens New State-of-the-Art Engineering Building',
+    category: 'Campus News',
+    date: '2024-08-15',
+    imageUrl: 'https://picsum.photos/600/400?random=5',
+    description: 'The new building features advanced labs and collaborative spaces, set to foster innovation among students and faculty.',
+  },
+  {
+    id: 2,
+    title: 'Alumna Dr. Evelyn Reed (Class of \'98) Wins Nobel Prize',
+    category: 'Alumni Achievement',
+    date: '2024-08-12',
+    imageUrl: 'https://picsum.photos/600/400?random=6',
+    description: 'Dr. Reed was awarded the Nobel Prize in Chemistry for her groundbreaking research on molecular machines.',
+  },
+  {
+    id: 3,
+    title: 'Annual Fund Drive Exceeds Goal, Raises $2.5M for Scholarships',
+    category: 'Donations',
+    date: '2024-08-10',
+    imageUrl: 'https://picsum.photos/600/400?random=7',
+    description: 'Thanks to the generosity of our alumni and friends, more students will have access to quality education.',
+  },
+  {
+    id: 4,
+    title: 'Homecoming 2024 Announcement: Save the Date!',
+    category: 'Events',
+    date: '2024-08-05',
+    imageUrl: 'https://picsum.photos/600/400?random=8',
+    description: 'Mark your calendars for a weekend of celebration, reunion, and university pride from October 18-20, 2024.',
   },
 ];
