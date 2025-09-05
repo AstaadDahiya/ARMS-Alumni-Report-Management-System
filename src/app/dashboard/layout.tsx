@@ -44,8 +44,8 @@ const secondaryNavItems = [
 export default function DashboardLayout({ children }: { children: ReactNode }) {
   const pathname = usePathname();
 
-  if (pathname.startsWith('/dashboard/student')) {
-    return <main className="flex-1 p-4 sm:p-6 bg-background">{children}</main>;
+  if (pathname === '/dashboard/student') {
+    return <>{children}</>;
   }
 
   return (
