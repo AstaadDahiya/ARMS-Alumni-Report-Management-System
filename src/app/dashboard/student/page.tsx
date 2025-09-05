@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { ChatInterface } from "@/components/chat-interface";
 import { Card, CardHeader, CardTitle, CardContent, CardDescription } from "@/components/ui/card";
-import { GraduationCap, LogOut, ArrowRight, Lightbulb } from "lucide-react";
+import { GraduationCap, LogOut, ArrowRight, Lightbulb, User } from "lucide-react";
 import Link from 'next/link';
 import Image from "next/image";
 
@@ -17,12 +17,20 @@ export default function StudentPage() {
             Student Portal
           </h1>
         </Link>
-        <Button variant="outline" asChild>
-          <Link href="/">
-            <LogOut className="mr-2 h-4 w-4" />
-            Logout
-          </Link>
-        </Button>
+        <div className="flex items-center gap-2">
+          <Button variant="ghost" size="icon" asChild>
+            <Link href="/dashboard/profile">
+              <User className="h-5 w-5" />
+              <span className="sr-only">Profile</span>
+            </Link>
+          </Button>
+          <Button variant="outline" asChild>
+            <Link href="/">
+              <LogOut className="mr-2 h-4 w-4" />
+              Logout
+            </Link>
+          </Button>
+        </div>
       </header>
       <main className="flex-1 grid md:grid-cols-2 gap-8 p-4 md:p-8">
         <div className="flex flex-col gap-8">

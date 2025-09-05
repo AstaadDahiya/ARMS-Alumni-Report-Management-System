@@ -24,6 +24,7 @@ import {
   DollarSign,
   GraduationCap,
   HeartHandshake,
+  User,
 } from "lucide-react";
 
 const navItems = [
@@ -37,6 +38,7 @@ const navItems = [
 ];
 
 const secondaryNavItems = [
+    { href: "/dashboard/profile", icon: User, label: "My Profile" },
     { href: "/dashboard/settings", icon: Settings, label: "Settings" },
     { href: "/dashboard/contact-us", icon: CircleHelp, label: "Contact Us" },
 ]
