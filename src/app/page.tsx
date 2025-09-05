@@ -18,7 +18,7 @@ export default function LoginPage() {
           <CardContent>
             <div className="space-y-4">
               <Button asChild className="w-full" variant="outline">
-                <a href="/dashboard">
+                <a href="/dashboard/student">
                   <User className="mr-2" />
                   Student
                 </a>

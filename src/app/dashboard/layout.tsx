@@ -18,13 +18,11 @@ import {
   Users,
   Calendar,
   Briefcase,
-  HeartHandshake,
   Newspaper,
   Settings,
   CircleHelp,
   DollarSign,
   GraduationCap,
-  Sparkles,
   Star,
 } from "lucide-react";
 
@@ -45,6 +43,10 @@ const secondaryNavItems = [
 
 export default function DashboardLayout({ children }: { children: ReactNode }) {
   const pathname = usePathname();
+
+  if (pathname.startsWith('/dashboard/student')) {
+    return <main className="flex-1 p-4 sm:p-6 bg-background/90">{children}</main>;
+  }
 
   return (
     <SidebarProvider>
