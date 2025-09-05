@@ -21,7 +21,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={cn(inter.variable, "font-body antialiased")}>
+      <body className={cn(inter.variable, "font-body antialiased")} suppressHydrationWarning>
         {children}
         <Toaster />
       </body>
