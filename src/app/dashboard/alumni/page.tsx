@@ -103,7 +103,7 @@ export default function AlumniDirectoryPage() {
             </CardHeader>
             <CardContent className="space-y-2 text-sm">
                 <p className="text-muted-foreground">{alumnus.company}</p>
-                <p><Badge variant="outline">{alumnus.major}</Badge> - {alumnus.graduationYear}</p>
+                <div><Badge variant="outline">{alumnus.major}</Badge> - {alumnus.graduationYear}</div>
                  <div className="flex flex-wrap gap-1 pt-2">
                     {alumnus.skills.map(skill => <Badge key={skill} variant="secondary">{skill}</Badge>)}
                 </div>
