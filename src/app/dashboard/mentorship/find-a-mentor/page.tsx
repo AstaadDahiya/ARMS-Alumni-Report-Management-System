@@ -23,6 +23,7 @@ import {
 import { Textarea } from '@/components/ui/textarea';
 import type { Alumnus } from '@/lib/types';
 import Link from 'next/link';
+import { ThemeToggle } from '@/components/theme-toggle';
 
 export default function FindMentorPage() {
   const [search, setSearch] = useState('');
@@ -74,6 +75,7 @@ export default function FindMentorPage() {
           <h1 className="font-semibold text-xl">Find a Mentor</h1>
           <p className="text-sm text-muted-foreground">Connect with experienced alumni from MAIT.</p>
         </div>
+        <ThemeToggle />
       </header>
 
       <main className="p-4 sm:p-6 space-y-6">
@@ -144,7 +146,7 @@ export default function FindMentorPage() {
                             <DialogDescription>
                                 Write a short message introducing yourself and what you're looking for in a mentor.
                             </DialogDescription>
-                        </DialogHeader>
+                        </Header>
                         <div className="py-4">
                             <Textarea 
                                 placeholder={`Hi ${selectedMentor?.name}, I am a student at MAIT and I'd love to connect...`}

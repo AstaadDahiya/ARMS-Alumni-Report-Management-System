@@ -7,6 +7,7 @@ import { LogOut, ArrowRight, Lightbulb, User } from "lucide-react";
 import Link from 'next/link';
 import Image from "next/image";
 import { Logo } from "@/components/ui/logo";
+import { ThemeToggle } from "@/components/theme-toggle";
 
 export default function StudentPage() {
   return (
@@ -19,6 +20,7 @@ export default function StudentPage() {
           </h1>
         </Link>
         <div className="flex items-center gap-2">
+           <ThemeToggle />
           <Button variant="ghost" size="icon" asChild>
             <Link href="/dashboard/profile">
               <User className="h-5 w-5" />

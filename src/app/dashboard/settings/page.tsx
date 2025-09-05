@@ -9,17 +9,24 @@ import { Separator } from "@/components/ui/separator";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { Input } from "@/components/ui/input";
+import { ThemeToggle } from "@/components/theme-toggle";
+import { useTheme } from "next-themes";
 
 export default function SettingsPage() {
+  const { theme, setTheme } = useTheme();
 
   return (
     <div className="space-y-6">
-      <div>
-        <h1 className="text-3xl font-bold tracking-tight">Settings</h1>
-        <p className="text-muted-foreground">
-          Manage your account settings, notifications, and appearance.
-        </p>
+      <div className="flex justify-between items-center">
+        <div>
+          <h1 className="text-3xl font-bold tracking-tight">Settings</h1>
+          <p className="text-muted-foreground">
+            Manage your account settings, notifications, and appearance.
+          </p>
+        </div>
+        <ThemeToggle />
       </div>
+
 
       <Tabs defaultValue="account" className="space-y-4">
         <TabsList>
@@ -146,8 +153,8 @@ export default function SettingsPage() {
                     <h3 className="text-lg font-medium">Theme</h3>
                     <p className="text-sm text-muted-foreground mb-4">Select the theme for the dashboard.</p>
                     <div className="flex items-center space-x-2">
-                        <Button variant="outline">Light</Button>
-                        <Button>Dark</Button>
+                        <Button variant={theme === 'light' ? 'default' : 'outline'} onClick={() => setTheme('light')}>Light</Button>
+                        <Button variant={theme === 'dark' ? 'default' : 'outline'} onClick={() => setTheme('dark')}>Dark</Button>
                     </div>
                 </div>
             </CardContent>
