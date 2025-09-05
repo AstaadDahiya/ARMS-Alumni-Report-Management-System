@@ -51,8 +51,10 @@ export default function StudentPage() {
               </CardDescription>
             </CardHeader>
             <CardContent className="relative z-10 flex flex-col justify-end flex-grow mt-auto p-6">
-                <Button size="lg" className="bg-white text-black hover:bg-gray-200 self-start">
-                  Find a Mentor <ArrowRight className="ml-2 h-5 w-5" />
+                <Button size="lg" className="bg-white text-black hover:bg-gray-200 self-start" asChild>
+                  <Link href="/dashboard/mentorship/find-a-mentor">
+                    Find a Mentor <ArrowRight className="ml-2 h-5 w-5" />
+                  </Link>
                 </Button>
             </CardContent>
           </Card>

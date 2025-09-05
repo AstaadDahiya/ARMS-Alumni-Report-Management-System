@@ -26,6 +26,12 @@ import {
   User as UserIcon,
 } from "lucide-react";
 import { Logo } from "@/components/ui/logo";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion"
 
 const navItems = [
   { href: "/dashboard", icon: LayoutGrid, label: "Dashboard" },
@@ -33,7 +39,15 @@ const navItems = [
   { href: "/dashboard/events", icon: Calendar, label: "Events" },
   { href: "/dashboard/job-board", icon: Briefcase, label: "Job Board" },
   { href: "/dashboard/donations", icon: DollarSign, label: "Donations" },
-  { href: "/dashboard/mentorship", icon: HeartHandshake, label: "Mentorship" },
+  { 
+    href: "/dashboard/mentorship", 
+    icon: HeartHandshake, 
+    label: "Mentorship",
+    subItems: [
+      { href: "/dashboard/mentorship", label: "Overview" },
+      { href: "/dashboard/mentorship-requests", label: "Requests" },
+    ]
+  },
   { href: "/dashboard/news-and-updates", icon: Newspaper, label: "News and Updates" },
 ];
 
@@ -61,24 +75,64 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
         </SidebarHeader>
         <SidebarContent className="p-2">
           <SidebarMenu>
-            {navItems.map((item) => (
-              <SidebarMenuItem key={item.href}>
-                <SidebarMenuButton
-                  asChild
-                  isActive={
-                    item.href === "/dashboard"
-                      ? pathname === item.href
-                      : pathname.startsWith(item.href)
-                  }
-                  tooltip={{ children: item.label, side: "right", align:"center" }}
-                >
-                  <Link href={item.href}>
-                    <item.icon />
-                    <span>{item.label}</span>
-                  </Link>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-            ))}
+            <Accordion type="single" collapsible className="w-full">
+              {navItems.map((item) => (
+                item.subItems ? (
+                  <AccordionItem value={item.href} key={item.href} className="border-none">
+                    <AccordionTrigger 
+                      className="[&[data-state=open]>svg]:rotate-180 p-0"
+                      asChild
+                    >
+                       <SidebarMenuButton
+                        asChild
+                        isActive={pathname.startsWith(item.href)}
+                        tooltip={{ children: item.label, side: "right", align:"center" }}
+                       >
+                         <div className="flex justify-between w-full">
+                           <Link href={item.href}>
+                             <item.icon />
+                             <span>{item.label}</span>
+                           </Link>
+                         </div>
+                       </SidebarMenuButton>
+                    </AccordionTrigger>
+                    <AccordionContent className="pb-0 pl-7">
+                      <SidebarMenu>
+                        {item.subItems.map(subItem => (
+                          <SidebarMenuItem key={subItem.href}>
+                            <SidebarMenuButton
+                              asChild
+                              isActive={pathname === subItem.href}
+                              variant="ghost"
+                              className="h-8 justify-start"
+                            >
+                              <Link href={subItem.href}>- {subItem.label}</Link>
+                            </SidebarMenuButton>
+                          </SidebarMenuItem>
+                        ))}
+                      </SidebarMenu>
+                    </AccordionContent>
+                  </AccordionItem>
+                ) : (
+                <SidebarMenuItem key={item.href}>
+                  <SidebarMenuButton
+                    asChild
+                    isActive={
+                      item.href === "/dashboard"
+                        ? pathname === item.href
+                        : pathname.startsWith(item.href)
+                    }
+                    tooltip={{ children: item.label, side: "right", align:"center" }}
+                  >
+                    <Link href={item.href}>
+                      <item.icon />
+                      <span>{item.label}</span>
+                    </Link>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+                )
+              ))}
+            </Accordion>
           </SidebarMenu>
           <div className="flex-grow" />
            <SidebarMenu>

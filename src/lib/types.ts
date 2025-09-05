@@ -53,3 +53,14 @@ export interface Job {
   postedDate: string;
   description: string;
 }
+
+export interface MentorshipRequest {
+    id: number;
+    studentName: string;
+    studentId: number;
+    mentorName: string;
+    mentorId: number;
+    requestDate: string;
+    status: 'Pending' | 'Accepted' | 'Declined';
+    message: string;
+}

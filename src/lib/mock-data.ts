@@ -1,5 +1,5 @@
 
-import type { Alumnus, Event, ProfileUpdateRequest, NewsArticle, Job } from './types';
+import type { Alumnus, Event, ProfileUpdateRequest, NewsArticle, Job, MentorshipRequest } from './types';
 
 export const alumni: Alumnus[] = [
   {
@@ -230,7 +230,7 @@ export const jobs: Job[] = [
     location: 'Noida, India',
     type: 'Internship',
     industry: 'Software',
-    postedDate: '2024-08-22',
+    postedDate: '2024-8-22',
     description: 'Support the marketing team in executing campaigns, creating content, and analyzing market trends for Adobe\'s creative suite.',
   },
   {
@@ -243,4 +243,48 @@ export const jobs: Job[] = [
     postedDate: '2024-08-12',
     description: 'Ensure that Google\'s services are reliable and scalable. This role combines software engineering and systems administration.',
   },
+];
+
+
+export const mentorshipRequests: MentorshipRequest[] = [
+  {
+    id: 1,
+    studentName: 'Amit Kumar',
+    studentId: 101,
+    mentorName: 'Alex Massy',
+    mentorId: 1,
+    requestDate: '2024-08-25',
+    status: 'Pending',
+    message: 'Hi Alex, I am a final year CSE student and very interested in a career in financial technology. Your experience at JP Morgan is very impressive, and I would be grateful for your guidance.'
+  },
+  {
+    id: 2,
+    studentName: 'Priya Singh',
+    studentId: 102,
+    mentorName: 'Aryan Dahiya',
+    mentorId: 3,
+    requestDate: '2024-08-24',
+    status: 'Pending',
+    message: 'Hello Mr. Dahiya, I admire your journey to becoming a Product Manager at Google. I am exploring a career in product management and would love to learn from your experience.'
+  },
+  {
+    id: 3,
+    studentName: 'Rahul Sharma',
+    studentId: 103,
+    mentorName: 'Lakshya Jangra',
+    mentorId: 2,
+    requestDate: '2024-08-23',
+    status: 'Accepted',
+    message: 'Hi Lakshya, I am passionate about hardware engineering and your work at Nvidia is inspiring. Could I connect with you to learn more about the field?'
+  },
+   {
+    id: 4,
+    studentName: 'Sneha Gupta',
+    studentId: 104,
+    mentorName: 'Nikhil Bokaria',
+    mentorId: 4,
+    requestDate: '2024-08-22',
+    status: 'Declined',
+    message: 'Respected Mr. Bokaria, I am a business student interested in consulting. I saw your profile on the alumni portal and would be honored to have you as my mentor.'
+  }
 ];
