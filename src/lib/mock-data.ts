@@ -91,10 +91,10 @@ export const alumni: Alumnus[] = [
 export const events: Event[] = [
   {
     id: 1,
-    title: 'Annual Alumni Reunion 2024',
+    title: 'MAIT Annual Alumni Reunion 2024',
     date: '2024-10-26T18:00:00',
     type: 'Reunion',
-    location: 'Grand Ballroom, University Campus',
+    location: 'MAIT Campus, New Delhi',
     description: 'Join us for our biggest event of the year! Reconnect with old friends, network with fellow alumni, and celebrate our shared history.',
     imageUrl: 'https://picsum.photos/600/400?random=1',
   },
@@ -104,7 +104,7 @@ export const events: Event[] = [
     date: '2024-09-15T14:00:00',
     type: 'Webinar',
     location: 'Online',
-    description: 'A deep dive into how Artificial Intelligence is transforming industries, featuring guest speaker and alumnus, Dr. Alan Grant.',
+    description: 'A deep dive into how Artificial Intelligence is transforming industries, featuring guest speaker and MAIT alumnus, Aryan Dahiya (Google).',
     imageUrl: 'https://picsum.photos/600/400?random=2',
   },
   {
@@ -112,7 +112,7 @@ export const events: Event[] = [
     title: 'Student-Alumni Mentorship Kick-off',
     date: '2024-09-05T10:00:00',
     type: 'Mentorship Program',
-    location: 'University Library, Room 301',
+    location: 'MAIT Library, Room 301',
     description: 'Our flagship mentorship program begins! Mentors and mentees will meet for the first time and set goals for the upcoming year.',
     imageUrl: 'https://picsum.photos/600/400?random=3',
   },
@@ -121,8 +121,8 @@ export const events: Event[] = [
     title: 'Tech Industry Networking Night',
     date: '2024-11-12T19:00:00',
     type: 'Networking',
-    location: 'Downtown Tech Hub',
-    description: 'An exclusive event for alumni and students interested in the tech industry. Build connections that can shape your career.',
+    location: 'Delhi Tech Hub',
+    description: 'An exclusive event for MAIT alumni and students interested in the tech industry. Build connections that can shape your career.',
     imageUrl: 'https://picsum.photos/600/400?random=4',
   },
 ];
