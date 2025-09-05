@@ -40,6 +40,7 @@ export default function NewsAndUpdatesPage() {
                <Badge variant={
                    article.category === 'Alumni Achievement' ? 'default' :
                    article.category === 'Campus News' ? 'secondary' :
+                   article.category === 'Campus Events' ? 'destructive' :
                    'outline'
                }>{article.category}</Badge>
               <CardTitle className="text-xl">{article.title}</CardTitle>
