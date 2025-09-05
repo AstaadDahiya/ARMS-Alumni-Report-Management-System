@@ -9,7 +9,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { getCareerGuidance } from "@/app/actions/ai";
 import { useToast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
-import { Bot, SendHoriz, User, Sparkles } from "lucide-react";
+import { Bot, SendHorizontal, User, Sparkles } from "lucide-react";
 
 interface Message {
   id: number;
@@ -49,7 +49,7 @@ export function ChatInterface() {
       content: input,
     };
     setMessages(prev => [...prev, userMessage]);
-    setInput('');
+setInput('');
     setIsLoading(true);
 
     const result = await getCareerGuidance(input);
@@ -130,7 +130,7 @@ export function ChatInterface() {
             }}
           />
           <Button type="submit" size="icon" className="absolute right-1.5 rounded-full" disabled={isLoading || !input.trim()}>
-            <SendHoriz className="h-5 w-5" />
+            <SendHorizontal className="h-5 w-5" />
             <span className="sr-only">Send message</span>
           </Button>
         </form>
