@@ -24,6 +24,7 @@ import {
   DollarSign,
   GraduationCap,
   Star,
+  UserCheck,
 } from "lucide-react";
 
 const navItems = [
@@ -34,6 +35,7 @@ const navItems = [
   { href: "/dashboard/talent-pool", icon: Star, label: "Talent Pool"},
   { href: "/dashboard/donations", icon: DollarSign, label: "Donations" },
   { href: "/dashboard/news-and-updates", icon: Newspaper, label: "News and Updates" },
+  { href: "/dashboard/update-requests", icon: UserCheck, label: "Update Requests" },
 ];
 
 const secondaryNavItems = [

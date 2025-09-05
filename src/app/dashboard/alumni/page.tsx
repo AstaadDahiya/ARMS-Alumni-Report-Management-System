@@ -1,9 +1,9 @@
 "use client";
 
 import { useState, useMemo } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
 import { alumni as allAlumni } from '@/lib/mock-data';
@@ -12,96 +12,105 @@ import { Search } from 'lucide-react';
 
 export default function AlumniDirectoryPage() {
   const [search, setSearch] = useState('');
-  const [sortConfig, setSortConfig] = useState<{ key: keyof Alumnus, direction: 'asc' | 'desc' } | null>(null);
+  const [graduationYear, setGraduationYear] = useState('all');
+  const [location, setLocation] = useState('all');
+  const [major, setMajor] = useState('all');
+  const [company, setCompany] = useState('all');
 
-  const filteredAndSortedAlumni = useMemo(() => {
-    let filtered = allAlumni.filter(alumnus =>
-      alumnus.name.toLowerCase().includes(search.toLowerCase()) ||
-      alumnus.major.toLowerCase().includes(search.toLowerCase()) ||
-      alumnus.company.toLowerCase().includes(search.toLowerCase()) ||
-      String(alumnus.graduationYear).includes(search)
-    );
+  const distinct = <T, K extends keyof T>(items: T[], key: K): T[K][] => 
+    Array.from(new Set(items.map(item => item[key])));
 
-    if (sortConfig !== null) {
-      filtered.sort((a, b) => {
-        const aVal = a[sortConfig.key];
-        const bVal = b[sortConfig.key];
+  const graduationYears = useMemo(() => distinct(allAlumni, 'graduationYear').sort((a, b) => b - a), []);
+  const locations = useMemo(() => distinct(allAlumni, 'location').sort(), []);
+  const majors = useMemo(() => distinct(allAlumni, 'major').sort(), []);
+  const companies = useMemo(() => distinct(allAlumni, 'company').sort(), []);
 
-        if (aVal < bVal) {
-          return sortConfig.direction === 'asc' ? -1 : 1;
-        }
-        if (aVal > bVal) {
-          return sortConfig.direction === 'asc' ? 1 : -1;
-        }
-        return 0;
-      });
-    }
-
-    return filtered;
-  }, [search, sortConfig]);
-
-  const requestSort = (key: keyof Alumnus) => {
-    let direction: 'asc' | 'desc' = 'asc';
-    if (sortConfig && sortConfig.key === key && sortConfig.direction === 'asc') {
-      direction = 'desc';
-    }
-    setSortConfig({ key, direction });
-  };
-  
-  const getSortIndicator = (key: keyof Alumnus) => {
-    if (!sortConfig || sortConfig.key !== key) return null;
-    return sortConfig.direction === 'asc' ? ' ▲' : ' ▼';
-  }
+  const filteredAlumni = useMemo(() => {
+    return allAlumni.filter(alumnus => {
+      const searchMatch = alumnus.name.toLowerCase().includes(search.toLowerCase());
+      const yearMatch = graduationYear === 'all' || alumnus.graduationYear === Number(graduationYear);
+      const locationMatch = location === 'all' || alumnus.location === location;
+      const majorMatch = major === 'all' || alumnus.major === major;
+      const companyMatch = company === 'all' || alumnus.company === company;
+      
+      return searchMatch && yearMatch && locationMatch && majorMatch && companyMatch;
+    });
+  }, [search, graduationYear, location, major, company]);
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Alumni Directory</CardTitle>
-        <p className="text-muted-foreground">Search and browse all alumni profiles.</p>
-        <div className="relative mt-4">
-          <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-          <Input 
-            placeholder="Search by name, major, company, or year..." 
-            className="pl-8"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-          />
-        </div>
-      </CardHeader>
-      <CardContent>
-        <div className="overflow-x-auto">
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead onClick={() => requestSort('name')} className="cursor-pointer">Name{getSortIndicator('name')}</TableHead>
-                <TableHead onClick={() => requestSort('graduationYear')} className="cursor-pointer">Grad Year{getSortIndicator('graduationYear')}</TableHead>
-                <TableHead onClick={() => requestSort('major')} className="cursor-pointer">Major{getSortIndicator('major')}</TableHead>
-                <TableHead onClick={() => requestSort('company')} className="cursor-pointer">Company{getSortIndicator('company')}</TableHead>
-                <TableHead>Job Title</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {filteredAndSortedAlumni.map(alumnus => (
-                <TableRow key={alumnus.id}>
-                  <TableCell>
-                    <div className="flex items-center gap-3">
-                      <Avatar>
-                        <AvatarImage src={alumnus.avatarUrl} data-ai-hint="user avatar" />
-                        <AvatarFallback>{alumnus.name.charAt(0)}</AvatarFallback>
-                      </Avatar>
-                      <div className="font-medium">{alumnus.name}</div>
-                    </div>
-                  </TableCell>
-                  <TableCell>{alumnus.graduationYear}</TableCell>
-                  <TableCell><Badge variant="outline">{alumnus.major}</Badge></TableCell>
-                  <TableCell>{alumnus.company}</TableCell>
-                  <TableCell>{alumnus.jobTitle}</TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </div>
-      </CardContent>
-    </Card>
+    <div className="space-y-6">
+      <div>
+        <h1 className="text-2xl font-bold">Alumni Database</h1>
+        <p className="text-muted-foreground">Search and filter through the alumni network.</p>
+      </div>
+
+      <Card>
+        <CardContent className="p-4 space-y-4">
+          <div className="relative">
+            <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+            <Input 
+              placeholder="Search By Name..." 
+              className="pl-8"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+            />
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            <Select value={graduationYear} onValueChange={setGraduationYear}>
+              <SelectTrigger><SelectValue placeholder="Graduation year" /></SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">All Years</SelectItem>
+                {graduationYears.map(year => <SelectItem key={year} value={String(year)}>{year}</SelectItem>)}
+              </SelectContent>
+            </Select>
+            <Select value={location} onValueChange={setLocation}>
+              <SelectTrigger><SelectValue placeholder="Location" /></SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">All Locations</SelectItem>
+                {locations.map(loc => <SelectItem key={loc} value={loc}>{loc}</SelectItem>)}
+              </SelectContent>
+            </Select>
+             <Select value={major} onValueChange={setMajor}>
+              <SelectTrigger><SelectValue placeholder="Major" /></SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">All Majors</SelectItem>
+                {majors.map(m => <SelectItem key={m} value={m}>{m}</SelectItem>)}
+              </SelectContent>
+            </Select>
+            <Select value={company} onValueChange={setCompany}>
+               <SelectTrigger><SelectValue placeholder="Industry" /></SelectTrigger>
+               <SelectContent>
+                <SelectItem value="all">All Industries</SelectItem>
+                {companies.map(c => <SelectItem key={c} value={c}>{c}</SelectItem>)}
+              </SelectContent>
+            </Select>
+          </div>
+        </CardContent>
+      </Card>
+
+       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+        {filteredAlumni.map(alumnus => (
+          <Card key={alumnus.id}>
+            <CardHeader className="flex-row gap-4 items-center">
+               <Avatar className="w-12 h-12">
+                  <AvatarImage src={alumnus.avatarUrl} data-ai-hint="user avatar" />
+                  <AvatarFallback>{alumnus.name.charAt(0)}</AvatarFallback>
+                </Avatar>
+              <div>
+                <CardTitle className="text-lg">{alumnus.name}</CardTitle>
+                <CardDescription>{alumnus.jobTitle}</CardDescription>
+              </div>
+            </CardHeader>
+            <CardContent className="space-y-2 text-sm">
+                <p className="text-muted-foreground">{alumnus.company}</p>
+                <p><Badge variant="outline">{alumnus.major}</Badge> - {alumnus.graduationYear}</p>
+                 <div className="flex flex-wrap gap-1 pt-2">
+                    {alumnus.skills.map(skill => <Badge key={skill} variant="secondary">{skill}</Badge>)}
+                </div>
+            </CardContent>
+          </Card>
+        ))}
+      </div>
+    </div>
   );
 }
