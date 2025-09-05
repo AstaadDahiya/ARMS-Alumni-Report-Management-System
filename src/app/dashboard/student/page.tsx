@@ -3,16 +3,17 @@
 import { Button } from "@/components/ui/button";
 import { ChatInterface } from "@/components/chat-interface";
 import { Card, CardHeader, CardTitle, CardContent, CardDescription } from "@/components/ui/card";
-import { GraduationCap, LogOut, ArrowRight, Lightbulb, User } from "lucide-react";
+import { LogOut, ArrowRight, Lightbulb, User } from "lucide-react";
 import Link from 'next/link';
 import Image from "next/image";
+import { Logo } from "@/components/ui/logo";
 
 export default function StudentPage() {
   return (
     <div className="flex flex-col min-h-screen bg-background">
       <header className="flex h-20 items-center justify-between border-b px-4 md:px-8">
         <Link href="/" className="flex items-center gap-3">
-          <GraduationCap className="h-8 w-8 text-primary" />
+          <Logo className="h-8 w-8 text-primary" />
           <h1 className="text-2xl font-bold text-foreground tracking-tight">
             Student Portal
           </h1>

@@ -22,10 +22,10 @@ import {
   Settings,
   CircleHelp,
   DollarSign,
-  GraduationCap,
   HeartHandshake,
   User as UserIcon,
 } from "lucide-react";
+import { Logo } from "@/components/ui/logo";
 
 const navItems = [
   { href: "/dashboard", icon: LayoutGrid, label: "Dashboard" },
@@ -55,7 +55,7 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
       <Sidebar variant="sidebar" collapsible="icon">
         <SidebarHeader>
           <Link href="/" className="flex items-center gap-2 p-4">
-            <GraduationCap className="h-8 w-8 text-white" />
+            <Logo className="h-8 w-8" />
             <h1 className="text-2xl font-semibold text-white">ARMS</h1>
           </Link>
         </SidebarHeader>

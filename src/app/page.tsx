@@ -1,12 +1,13 @@
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { GraduationCap, User, UserCheck, Shield } from 'lucide-react';
+import { Logo } from '@/components/ui/logo';
+import { User, UserCheck, Shield } from 'lucide-react';
 
 export default function LoginPage() {
   return (
     <div className="flex flex-col min-h-dvh items-center justify-center bg-background p-4">
       <header className="absolute top-8 flex items-center space-x-3 text-center">
-        <GraduationCap className="h-12 w-12 text-accent" />
+        <Logo className="h-12 w-12 text-accent" />
         <h1 className="text-4xl font-bold text-foreground tracking-tight">ARMS</h1>
       </header>
       <main>
