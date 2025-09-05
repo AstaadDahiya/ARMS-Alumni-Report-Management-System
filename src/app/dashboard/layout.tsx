@@ -23,8 +23,7 @@ import {
   CircleHelp,
   DollarSign,
   GraduationCap,
-  Star,
-  UserCheck,
+  HeartHandshake,
 } from "lucide-react";
 
 const navItems = [
@@ -32,10 +31,9 @@ const navItems = [
   { href: "/dashboard/alumni", icon: Users, label: "Alumni Directory" },
   { href: "/dashboard/events", icon: Calendar, label: "Events" },
   { href: "/dashboard/job-board", icon: Briefcase, label: "Job Board" },
-  { href: "/dashboard/talent-pool", icon: Star, label: "Talent Pool"},
   { href: "/dashboard/donations", icon: DollarSign, label: "Donations" },
+  { href: "/dashboard/mentorship", icon: HeartHandshake, label: "Mentorship" },
   { href: "/dashboard/news-and-updates", icon: Newspaper, label: "News and Updates" },
-  { href: "/dashboard/update-requests", icon: UserCheck, label: "Update Requests" },
 ];
 
 const secondaryNavItems = [
@@ -47,7 +45,7 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
   const pathname = usePathname();
 
   if (pathname.startsWith('/dashboard/student')) {
-    return <main className="flex-1 p-4 sm:p-6 bg-background/90">{children}</main>;
+    return <main className="flex-1 p-4 sm:p-6 bg-background">{children}</main>;
   }
 
   return (
@@ -100,7 +98,7 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
         </SidebarContent>
       </Sidebar>
       <SidebarInset>
-        <main className="flex-1 p-4 sm:p-6 bg-background/90">{children}</main>
+        <main className="flex-1 p-4 sm:p-6 bg-background">{children}</main>
       </SidebarInset>
     </SidebarProvider>
   );
