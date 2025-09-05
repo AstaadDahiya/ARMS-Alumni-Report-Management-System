@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import type { ReactNode } from "react";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   SidebarProvider,
   Sidebar,
@@ -36,8 +35,6 @@ const navItems = [
   { href: "/dashboard/job-board", icon: Briefcase, label: "Job Board" },
   { href: "/dashboard/talent-pool", icon: Star, label: "Talent Pool"},
   { href: "/dashboard/donations", icon: DollarSign, label: "Donations" },
-  { href: "/dashboard/mentorship", icon: HeartHandshake, label: "Mentorship" },
-  { href: "/dashboard/career-guidance", icon: Sparkles, label: "Career Guidance" },
   { href: "/dashboard/news-and-updates", icon: Newspaper, label: "News and Updates" },
 ];
 
@@ -46,7 +43,7 @@ const secondaryNavItems = [
     { href: "/dashboard/contact-us", icon: CircleHelp, label: "Contact Us" },
 ]
 
-export function DashboardLayout({ children }: { children: ReactNode }) {
+export default function DashboardLayout({ children }: { children: ReactNode }) {
   const pathname = usePathname();
 
   return (
