@@ -12,7 +12,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { toast } from "@/hooks/use-toast";
+import { useToast } from "@/hooks/use-toast";
 import { alumni } from "@/lib/mock-data";
 import { Textarea } from "@/components/ui/textarea";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -38,6 +38,7 @@ const bio = "A passionate software engineer with over 6 years of experience in b
 
 export default function ProfilePage() {
   const [isEditing, setIsEditing] = React.useState(false);
+  const { toast } = useToast();
   const form = useForm<ProfileFormValues>({
     resolver: zodResolver(profileFormSchema),
     defaultValues: {
@@ -57,6 +58,8 @@ export default function ProfilePage() {
       title: "Profile Update Submitted",
       description: "Your changes have been sent for administrator validation.",
     });
+    // Here you would typically send the data to your backend
+    console.log(data);
     setIsEditing(false);
   }
 
@@ -207,7 +210,7 @@ export default function ProfilePage() {
                 </div>
                 <div className="flex gap-2">
                     <Button type="submit">Submit for Validation</Button>
-                    <Button variant="ghost" onClick={() => setIsEditing(false)}>Cancel</Button>
+                    <Button variant="ghost" type="button" onClick={() => setIsEditing(false)}>Cancel</Button>
                 </div>
               </form>
             </Form>
