@@ -26,6 +26,7 @@ import {
   DollarSign,
   HeartHandshake,
   User as UserIcon,
+  ChevronDown,
 } from "lucide-react";
 import { Logo } from "@/components/ui/logo";
 import {
@@ -82,23 +83,22 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
               {navItems.map((item) => (
                 item.subItems ? (
                   <AccordionItem value={item.href} key={item.href} className="border-none">
-                     <AccordionTrigger 
-                        className="[&[data-state=open]>svg]:rotate-180 p-0 w-full hover:no-underline"
-                     >
-                       <SidebarMenuItem className="w-full">
-                         <SidebarMenuButton
+                    <SidebarMenuItem>
+                      <AccordionTrigger className="p-0 w-full hover:no-underline [&>svg]:hidden">
+                        <SidebarMenuButton
                           asChild
                           isActive={pathname.startsWith(item.href)}
                           tooltip={{ children: item.label, side: "right", align:"center" }}
                           className="w-full justify-between"
-                         >
-                           <div className="flex items-center gap-2">
-                             <item.icon />
-                             <span>{item.label}</span>
-                           </div>
-                         </SidebarMenuButton>
-                       </SidebarMenuItem>
-                     </AccordionTrigger>
+                        >
+                          <div className="flex items-center gap-2">
+                            <item.icon />
+                            <span>{item.label}</span>
+                            <ChevronDown className="ml-auto h-4 w-4 shrink-0 transition-transform duration-200 group-[&[data-state=open]]:rotate-180" />
+                          </div>
+                        </SidebarMenuButton>
+                      </AccordionTrigger>
+                    </SidebarMenuItem>
                     <AccordionContent className="pb-0 pl-7">
                       <SidebarMenu>
                         {item.subItems.map(subItem => (
