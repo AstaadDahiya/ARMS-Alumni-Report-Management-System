@@ -11,6 +11,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { HandHeart, Target, School, Users, Gift } from 'lucide-react';
 import Image from 'next/image';
 import { useState } from 'react';
+import { alumni } from '@/lib/mock-data';
 
 const campaigns = [
   {
@@ -42,12 +43,11 @@ const campaigns = [
   },
 ];
 
-const recentDonors = [
-    { name: 'Rohan Verma', amount: 50000, avatar: 'https://picsum.photos/id/237/40/40' },
-    { name: 'Priya Sharma', amount: 25000, avatar: 'https://picsum.photos/id/238/40/40' },
-    { name: 'Ankit Gupta', amount: 10000, avatar: 'https://picsum.photos/id/239/40/40' },
-    { name: 'Sunita Reddy', amount: 75000, avatar: 'https://picsum.photos/id/240/40/40' },
-]
+const recentDonors = alumni.slice(0, 4).map(alumnus => ({
+    name: alumnus.name,
+    amount: (alumnus.id * 12345) % 80000 + 10000, // Just generating some random-ish amounts
+    avatar: alumnus.avatarUrl,
+}));
 
 export default function DonationsPage() {
     const [amount, setAmount] = useState(5000);
