@@ -64,7 +64,7 @@ export default function FindMentorPage(): JSX.Element {
   return (
     <div className="min-h-screen bg-background">
       <header className="sticky top-0 z-30 flex h-16 items-center gap-4 border-b bg-background/95 px-4 sm:px-6 backdrop-blur">
-        <Link href="/dashboard/mentorship">
+        <Link href="/dashboard/student">
           <Button variant="outline" size="icon" className="h-8 w-8">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4"><path d="m12 19-7-7 7-7" /><path d="M19 12H5" /></svg>
             <span className="sr-only">Back</span>
