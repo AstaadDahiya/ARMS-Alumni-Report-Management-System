@@ -24,7 +24,8 @@ function SubmitButton({ role }: { role: string }) {
 export default function LoginPage({ params }: { params: { role: string } }) {
   const searchParams = useSearchParams();
   const message = searchParams.get('message');
-  const role = params.role.charAt(0).toUpperCase() + params.role.slice(1);
+  const roleParam = params.role;
+  const role = roleParam.charAt(0).toUpperCase() + roleParam.slice(1);
 
   return (
     <div className="flex flex-col min-h-dvh items-center justify-center bg-secondary p-4 relative">
@@ -43,7 +44,7 @@ export default function LoginPage({ params }: { params: { role: string } }) {
           </CardHeader>
           <CardContent>
             <form action={login} className="space-y-4">
-              <input type="hidden" name="role" value={params.role} />
+              <input type="hidden" name="role" value={roleParam} />
               <div className="space-y-2">
                 <Label htmlFor="email">Email</Label>
                 <Input
