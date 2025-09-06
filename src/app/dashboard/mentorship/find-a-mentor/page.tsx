@@ -26,7 +26,7 @@ import type { Alumnus } from '@/lib/types';
 import Link from 'next/link';
 import { ThemeToggle } from '@/components/theme-toggle';
 
-export default function FindMentorPage() {
+export default function FindMentorPage(): JSX.Element {
   const [search, setSearch] = useState('');
   const [major, setMajor] = useState('all');
   const [company, setCompany] = useState('all');
