@@ -63,7 +63,7 @@ export default function DashboardPage() {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div className="lg:col-span-3 space-y-6">
+        <div className="lg:col-span-2 space-y-6">
             <Card>
               <CardHeader>
                 <CardTitle>Recent activity</CardTitle>
@@ -122,6 +122,70 @@ export default function DashboardPage() {
                     </Accordion>
                 </CardContent>
             </Card>
+        </div>
+        <div className="lg:col-span-1 space-y-6">
+          <Card>
+            <CardHeader>
+              <CardTitle>Alumni Database</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="relative">
+                <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+                <Input placeholder="Search By Name..." className="pl-8" />
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                <Select>
+                  <SelectTrigger><SelectValue placeholder="Graduation year" /></SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="2023">2023</SelectItem>
+                    <SelectItem value="2022">2022</SelectItem>
+                    <SelectItem value="2021">2021</SelectItem>
+                  </SelectContent>
+                </Select>
+                <Select>
+                  <SelectTrigger><SelectValue placeholder="Location" /></SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="ny">New York</SelectItem>
+                    <SelectItem value="sf">San Francisco</SelectItem>
+                  </SelectContent>
+                </Select>
+                <Select>
+                  <SelectTrigger><SelectValue placeholder="Major" /></SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="cs">Computer Science</SelectItem>
+                    <SelectItem value="ee">Electrical Engineering</SelectItem>
+                  </SelectContent>
+                </Select>
+                <Select>
+                  <SelectTrigger><SelectValue placeholder="Industry" /></SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="tech">Tech</SelectItem>
+                    <SelectItem value="finance">Finance</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="space-y-3">
+                {alumniDb.map(alumnus => (
+                    <div key={alumnus.name} className="flex items-center justify-between p-3 bg-secondary rounded-lg">
+                        <div className="flex items-center gap-3">
+                            <Avatar className="h-9 w-9">
+                                <AvatarImage src={alumnus.avatar} data-ai-hint="user avatar" />
+                                <AvatarFallback>{alumnus.name.charAt(0)}</AvatarFallback>
+                            </Avatar>
+                            <div>
+                                <p className="font-medium text-sm">{alumnus.name}</p>
+                                <p className="text-xs text-muted-foreground">{alumnus.org}</p>
+                            </div>
+                        </div>
+                        <Button variant="ghost" size="sm" className="text-xs">
+                            <Edit className="h-3 w-3 mr-1"/>
+                            Edit
+                        </Button>
+                    </div>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
         </div>
       </div>
     </div>
