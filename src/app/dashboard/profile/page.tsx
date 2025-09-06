@@ -113,7 +113,7 @@ export default function ProfilePage() {
                     <p className="text-sm text-muted-foreground mt-1">{currentUser.location}</p>
                   </div>
                    <Button onClick={() => setIsEditing(!isEditing)} variant="outline" className="mt-4 sm:mt-0">
-                      <Settings className="mr-2" />
+                      <Settings className="mr-2 h-4 w-4" />
                       {isEditing ? 'Cancel' : 'Edit Profile'}
                    </Button>
               </div>
@@ -245,7 +245,7 @@ export default function ProfilePage() {
             <div className="lg:col-span-2 space-y-6">
                  <Card>
                     <CardHeader>
-                        <CardTitle className="flex items-center gap-2 text-xl"><User /> About</CardTitle>
+                        <CardTitle className="flex items-center gap-2 text-xl"><User className="h-5 w-5" /> About</CardTitle>
                     </CardHeader>
                     <CardContent>
                         <p className="text-muted-foreground leading-relaxed">{bio}</p>
@@ -253,11 +253,11 @@ export default function ProfilePage() {
                 </Card>
                  <Card>
                     <CardHeader>
-                        <CardTitle className="flex items-center gap-2 text-xl"><Briefcase /> Experience</CardTitle>
+                        <CardTitle className="flex items-center gap-2 text-xl"><Briefcase className="h-5 w-5" /> Experience</CardTitle>
                     </CardHeader>
                     <CardContent className="space-y-6">
                         <div className="flex gap-4">
-                            <div className="p-2 bg-muted rounded-md h-fit"><Building/></div>
+                            <div className="p-3 bg-muted rounded-md h-fit"><Building className="h-5 w-5"/></div>
                             <div>
                                 <h3 className="font-semibold text-lg">{currentUser.jobTitle}</h3>
                                 <p>{currentUser.company} &middot; {currentUser.location}</p>
@@ -268,14 +268,14 @@ export default function ProfilePage() {
                 </Card>
                  <Card>
                     <CardHeader>
-                        <CardTitle className="flex items-center gap-2 text-xl"><GraduationCap /> Education</CardTitle>
+                        <CardTitle className="flex items-center gap-2 text-xl"><GraduationCap className="h-5 w-5" /> Education</CardTitle>
                     </CardHeader>
                     <CardContent>
                         <div className="flex gap-4">
-                             <div className="p-2 bg-muted rounded-md h-fit"><GraduationCap/></div>
+                             <div className="p-3 bg-muted rounded-md h-fit"><GraduationCap className="h-5 w-5"/></div>
                              <div>
-                                <h3 className="font-semibold text-lg">Your University Name</h3>
-                                <p>Bachelor's Degree, {currentUser.major}</p>
+                                <h3 className="font-semibold text-lg">Maharaja Agrasen Institute of Technology</h3>
+                                <p>Bachelor of Technology, {currentUser.major}</p>
                                 <p className="text-sm text-muted-foreground">Graduated {currentUser.graduationYear}</p>
                             </div>
                         </div>
@@ -283,7 +283,7 @@ export default function ProfilePage() {
                 </Card>
                  <Card>
                     <CardHeader>
-                        <CardTitle className="flex items-center gap-2 text-xl"><HardHat/> Skills</CardTitle>
+                        <CardTitle className="flex items-center gap-2 text-xl"><HardHat className="h-5 w-5" /> Skills</CardTitle>
                     </CardHeader>
                     <CardContent className="flex flex-wrap gap-2">
                        {currentUser.skills.map(skill => <Badge key={skill} variant="secondary" className="text-base py-1 px-3">{skill}</Badge>)}
@@ -293,21 +293,21 @@ export default function ProfilePage() {
              <div className="space-y-6">
                  <Card>
                     <CardHeader>
-                        <CardTitle>Contact</CardTitle>
+                        <CardTitle>Contact Information</CardTitle>
                     </CardHeader>
-                    <CardContent className="space-y-3">
+                    <CardContent className="space-y-4">
                        <div className="flex items-center gap-3">
-                            <Mail className="text-muted-foreground"/>
+                            <Mail className="text-muted-foreground h-4 w-4"/>
                             <a href={`mailto:${currentUser.email}`} className="text-primary hover:underline">{currentUser.email}</a>
                        </div>
                        <Separator/>
                        <div className="flex items-center gap-3">
-                            <Phone className="text-muted-foreground"/>
-                            <span>+1 (123) 456-7890</span>
+                            <Phone className="text-muted-foreground h-4 w-4"/>
+                            <span>+91 123-456-7890</span>
                        </div>
                        <Separator/>
                        <div className="flex items-center gap-3">
-                            <MapPin className="text-muted-foreground"/>
+                            <MapPin className="text-muted-foreground h-4 w-4"/>
                             <span>{currentUser.location}</span>
                        </div>
                     </CardContent>
@@ -318,3 +318,5 @@ export default function ProfilePage() {
     </div>
   );
 }
+
+    
