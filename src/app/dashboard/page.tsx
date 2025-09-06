@@ -63,7 +63,7 @@ export default function DashboardPage() {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div className="lg:col-span-2 space-y-6">
+        <div className="lg:col-span-3 space-y-6">
             <Card>
               <CardHeader>
                 <CardTitle>Recent activity</CardTitle>
@@ -123,69 +123,6 @@ export default function DashboardPage() {
                 </CardContent>
             </Card>
         </div>
-         <Card>
-            <CardHeader>
-                <CardTitle>Alumni Database</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-                <div className="relative">
-                    <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-                    <Input 
-                    placeholder="Search By Name..." 
-                    className="pl-8 bg-secondary"
-                    />
-                </div>
-                <div className="grid grid-cols-2 gap-4">
-                    <Select>
-                        <SelectTrigger className="bg-secondary"><SelectValue placeholder="Graduation year" /></SelectTrigger>
-                        <SelectContent>
-                            <SelectItem value="2023">2023</SelectItem>
-                            <SelectItem value="2022">2022</SelectItem>
-                        </SelectContent>
-                    </Select>
-                     <Select>
-                        <SelectTrigger className="bg-secondary"><SelectValue placeholder="Location" /></SelectTrigger>
-                        <SelectContent>
-                            <SelectItem value="ny">New York</SelectItem>
-                            <SelectItem value="sf">San Francisco</SelectItem>
-                        </SelectContent>
-                    </Select>
-                     <Select>
-                        <SelectTrigger className="bg-secondary"><SelectValue placeholder="Major" /></SelectTrigger>
-                        <SelectContent>
-                            <SelectItem value="cs">Computer Science</SelectItem>
-                             <SelectItem value="mkt">Marketing</SelectItem>
-                        </SelectContent>
-                    </Select>
-                     <Select>
-                        <SelectTrigger className="bg-secondary"><SelectValue placeholder="Industry" /></SelectTrigger>
-                        <SelectContent>
-                            <SelectItem value="tech">Tech</SelectItem>
-                            <SelectItem value="finance">Finance</SelectItem>
-                        </SelectContent>
-                    </Select>
-                </div>
-                 <div className="space-y-3">
-                    {alumniDb.map(alum => (
-                        <div key={alum.name} className="flex items-center justify-between p-2 bg-secondary rounded-lg">
-                            <div className="flex items-center gap-3">
-                                <Avatar className='h-8 w-8'>
-                                    <AvatarImage src={alum.avatar} data-ai-hint="user avatar" />
-                                    <AvatarFallback><User size={16}/></AvatarFallback>
-                                </Avatar>
-                                <div>
-                                    <p className="font-medium text-sm">{alum.name}</p>
-                                    <p className="text-xs text-muted-foreground">{alum.org}</p>
-                                </div>
-                            </div>
-                            <Button variant="ghost" size="sm">
-                                <Edit size={14} className="mr-1"/> Edit
-                            </Button>
-                        </div>
-                    ))}
-                 </div>
-          </CardContent>
-        </Card>
       </div>
     </div>
   );
