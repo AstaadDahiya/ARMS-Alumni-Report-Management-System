@@ -10,8 +10,9 @@ export async function getCareerGuidance(query: string) {
   try {
     const { careerGuidanceResponse } = await careerGuidanceChatbot({ studentQuery: query });
     return { response: careerGuidanceResponse };
-  } catch (error) {
+  } catch (error: any) {
     console.error("AI career guidance error:", error);
-    return { error: 'Failed to get career guidance. Please try again later.' };
+    const errorMessage = error.message || 'An unexpected error occurred.';
+    return { error: `Failed to get career guidance: ${errorMessage}` };
   }
 }
