@@ -31,8 +31,9 @@ export default function FindMentorPage(): JSX.Element {
   const [major, setMajor] = useState('all');
   const [company, setCompany] = useState('all');
   const [selectedMentor, setSelectedMentor] = useState<Alumnus | null>(null);
+  const { toast } = useToast();
 
-  const distinct = <T, K extends keyof T>(items: T[], key: K): T[K][] => 
+  const distinct = <T, K extends keyof T>(items: T[], key: K): T[K][] =>
     Array.from(new Set(items.map(item => item[key])));
 
   const majors = useMemo(() => distinct(allAlumni, 'major').sort(), []);
@@ -45,23 +46,18 @@ export default function FindMentorPage(): JSX.Element {
         alumnus.skills.some(skill => skill.toLowerCase().includes(search.toLowerCase()));
       const majorMatch = major === 'all' || alumnus.major === major;
       const companyMatch = company === 'all' || alumnus.company === company;
-      
+
       return searchMatch && majorMatch && companyMatch;
     });
   }, [search, major, company]);
-  
-  const handleRequest = (mentor: Alumnus) => {
-    setSelectedMentor(mentor);
-  };
-  
-  const { toast } = useToast();
-  
+
   const handleSendRequest = () => {
-    if(selectedMentor) {
+    if (selectedMentor) {
       toast({
         title: `Request Sent to ${selectedMentor.name}`,
         description: "You will be notified when your request is accepted.",
       });
+      setSelectedMentor(null);
     }
   };
 
@@ -70,7 +66,7 @@ export default function FindMentorPage(): JSX.Element {
       <header className="sticky top-0 z-30 flex h-16 items-center gap-4 border-b bg-background/95 px-4 sm:px-6 backdrop-blur">
         <Link href="/dashboard/mentorship">
           <Button variant="outline" size="icon" className="h-8 w-8">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4"><path d="m12 19-7-7 7-7" /><path d="M19 12H5" /></svg>
             <span className="sr-only">Back</span>
           </Button>
         </Link>
@@ -86,8 +82,8 @@ export default function FindMentorPage(): JSX.Element {
           <CardContent className="p-4 flex flex-col md:flex-row gap-4">
             <div className="relative flex-grow">
               <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-              <Input 
-                placeholder="Search by name, title, or skills..." 
+              <Input
+                placeholder="Search by name, title, or skills..."
                 className="pl-8"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
@@ -135,48 +131,43 @@ export default function FindMentorPage(): JSX.Element {
                 </div>
                 <div className="flex flex-wrap gap-2">
                   {mentor.skills.slice(0, 3).map(skill => <Badge key={skill} variant="secondary">{skill}</Badge>)}
-                   {mentor.skills.length > 3 && <Badge variant="outline">+{mentor.skills.length - 3}</Badge>}
+                  {mentor.skills.length > 3 && <Badge variant="outline">+{mentor.skills.length - 3}</Badge>}
                 </div>
-                 <Dialog>
-                    <DialogTrigger asChild>
-                        <Button className="w-full mt-4" onClick={() => handleRequest(mentor)}>
-                            <Send className="mr-2 h-4 w-4" /> Send Request
-                        </Button>
-                    </DialogTrigger>
-                    <DialogContent>
-                        <DialogHeader>
-                            <DialogTitle>Send Mentorship Request to {selectedMentor?.name}</DialogTitle>
-                            <DialogDescription>
-                                Write a short message introducing yourself and what you're looking for in a mentor.
-                            </DialogDescription>
-                        </Header>
-                        <div className="py-4">
-                            <Textarea 
-                                placeholder={`Hi ${selectedMentor?.name}, I am a student at MAIT and I'd love to connect...`}
-                                rows={5}
-                             />
-                        </div>
-                        <DialogFooter>
-                            <DialogClose asChild>
-                                <Button variant="ghost">Cancel</Button>
-                            </DialogClose>
-                            <DialogClose asChild>
-                                <Button onClick={handleSendRequest}>Send</Button>
-                            </DialogClose>
-                        </DialogFooter>
-                    </DialogContent>
-                </Dialog>
+                <Button className="w-full mt-4" onClick={() => setSelectedMentor(mentor)}>
+                  <Send className="mr-2 h-4 w-4" /> Send Request
+                </Button>
               </CardContent>
             </Card>
           ))}
         </div>
         {filteredMentors.length === 0 && (
           <Card className="text-center p-12 col-span-full">
-              <CardTitle>No Mentors Found</CardTitle>
-              <CardDescription>Try adjusting your search filters.</CardDescription>
+            <CardTitle>No Mentors Found</CardTitle>
+            <CardDescription>Try adjusting your search filters.</CardDescription>
           </Card>
         )}
       </main>
+
+      <Dialog open={!!selectedMentor} onOpenChange={(isOpen) => !isOpen && setSelectedMentor(null)}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Send Mentorship Request to {selectedMentor?.name}</DialogTitle>
+            <DialogDescription>
+              Write a short message introducing yourself and what you're looking for in a mentor.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="py-4">
+            <Textarea
+              placeholder={`Hi ${selectedMentor?.name}, I am a student at MAIT and I'd love to connect...`}
+              rows={5}
+            />
+          </div>
+          <DialogFooter>
+            <Button variant="ghost" onClick={() => setSelectedMentor(null)}>Cancel</Button>
+            <Button onClick={handleSendRequest}>Send</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
