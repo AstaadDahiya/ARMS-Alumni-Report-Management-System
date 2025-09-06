@@ -48,7 +48,6 @@ const navItems = [
     label: "Mentorship",
     subItems: [
       { href: "/dashboard/mentorship", label: "Overview" },
-      { href: "/dashboard/mentorship/find-a-mentor", label: "Find a Mentor" },
       { href: "/dashboard/mentorship-requests", label: "Requests" },
     ]
   },
