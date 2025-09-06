@@ -12,7 +12,7 @@ export async function login(formData: FormData) {
 
   if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
     const errorMessage = "Missing Supabase credentials. Please check your environment variables."
-    return redirect(`/?message=${encodeURIComponent(errorMessage)}`);
+    return redirect(`/${role}/login?message=${encodeURIComponent(errorMessage)}`);
   }
 
   const supabase = createClient()
@@ -23,7 +23,7 @@ export async function login(formData: FormData) {
   })
 
   if (error) {
-    return redirect(`/?message=${error.message}`)
+    return redirect(`/${role}/login?message=${error.message}`)
   }
 
   revalidatePath('/', 'layout')
