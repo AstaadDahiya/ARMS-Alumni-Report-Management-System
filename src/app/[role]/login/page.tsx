@@ -12,20 +12,20 @@ import { useSearchParams } from 'next/navigation';
 import { ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
 
-function SubmitButton({ role }: { role: string }) {
-  const { pending } = useFormStatus();
-  return (
-    <Button className="w-full" disabled={pending} type="submit">
-      {pending ? 'Signing In...' : `Sign In as ${role}`}
-    </Button>
-  );
-}
-
 export default function LoginPage({ params }: { params: { role: string } }) {
   const searchParams = useSearchParams();
   const message = searchParams.get('message');
   const roleParam = params.role;
   const role = roleParam.charAt(0).toUpperCase() + roleParam.slice(1);
+
+  function SubmitButton() {
+    const { pending } = useFormStatus();
+    return (
+      <Button className="w-full" disabled={pending} type="submit">
+        {pending ? 'Signing In...' : `Sign In as ${role}`}
+      </Button>
+    );
+  }
 
   return (
     <div className="flex flex-col min-h-dvh items-center justify-center bg-secondary p-4 relative">
@@ -59,7 +59,7 @@ export default function LoginPage({ params }: { params: { role: string } }) {
                 <Label htmlFor="password">Password</Label>
                 <Input id="password" name="password" type="password" required />
               </div>
-              <SubmitButton role={role} />
+              <SubmitButton />
               {message && (
                 <p className="mt-4 p-4 bg-destructive/10 text-destructive text-center text-sm rounded-md">
                   {message}
