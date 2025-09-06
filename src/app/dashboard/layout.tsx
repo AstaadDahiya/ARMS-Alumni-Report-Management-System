@@ -27,6 +27,7 @@ import {
   HeartHandshake,
   User as UserIcon,
   ChevronDown,
+  LogOut,
 } from "lucide-react";
 import { Logo } from "@/components/ui/logo";
 import {
@@ -34,7 +35,8 @@ import {
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "@/components/ui/accordion"
+} from "@/components/ui/accordion";
+import { logout } from "@/app/actions/auth";
 
 const navItems = [
   { href: "/dashboard", icon: LayoutGrid, label: "Dashboard" },
@@ -152,6 +154,19 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
                 </SidebarMenuButton>
               </SidebarMenuItem>
             ))}
+             <SidebarMenuItem>
+                <form action={logout} className="w-full">
+                    <SidebarMenuButton
+                    asChild
+                    tooltip={{ children: "Logout", side: "right", align:"center" }}
+                    >
+                    <button type="submit" className="w-full">
+                        <LogOut />
+                        <span>Logout</span>
+                    </button>
+                    </SidebarMenuButton>
+                </form>
+            </SidebarMenuItem>
           </SidebarMenu>
         </SidebarContent>
       </Sidebar>
