@@ -30,9 +30,12 @@ export async function login(formData: FormData) {
   
   if (role === 'student') {
     redirect('/dashboard/student')
-  } else if (role === 'alumni' || role === 'admin') {
+  } else if (role === 'alumni') {
+    redirect('/dashboard')
+  } else if (role === 'admin') {
     redirect('/dashboard')
   } else {
+    // Fallback for any other case
     redirect('/dashboard')
   }
 }
