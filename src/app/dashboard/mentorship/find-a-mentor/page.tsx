@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState, useMemo } from 'react';
@@ -9,7 +10,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { alumni as allAlumni } from '@/lib/mock-data';
 import { Search, Briefcase, Mail, Send } from 'lucide-react';
-import { toast } from '@/hooks/use-toast';
+import { useToast } from '@/hooks/use-toast';
 import {
   Dialog,
   DialogContent,
@@ -53,12 +54,14 @@ export default function FindMentorPage() {
     setSelectedMentor(mentor);
   };
   
+  const { toast } = useToast();
+  
   const handleSendRequest = () => {
     if(selectedMentor) {
       toast({
         title: `Request Sent to ${selectedMentor.name}`,
         description: "You will be notified when your request is accepted.",
-      })
+      });
     }
   };
 
