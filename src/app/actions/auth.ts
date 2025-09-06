@@ -9,6 +9,12 @@ export async function login(formData: FormData) {
   const email = formData.get('email') as string
   const password = formData.get('password') as string
   const role = formData.get('role') as string;
+
+  if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
+    const errorMessage = "Missing Supabase credentials. Please check your environment variables."
+    return redirect(`/?message=${encodeURIComponent(errorMessage)}`);
+  }
+
   const supabase = createClient()
 
   const { error } = await supabase.auth.signInWithPassword({
@@ -24,6 +30,8 @@ export async function login(formData: FormData) {
   
   if (role === 'student') {
     redirect('/dashboard/student')
+  } else if (role === 'alumni' || role === 'admin') {
+    redirect('/dashboard')
   } else {
     redirect('/dashboard')
   }
