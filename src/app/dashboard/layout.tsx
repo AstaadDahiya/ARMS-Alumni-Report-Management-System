@@ -28,6 +28,7 @@ import {
   LogOut,
   Bell,
   Folder,
+  User as UserIcon
 } from "lucide-react";
 import { Logo } from "@/components/ui/logo";
 import { logout } from "@/app/actions/auth";
@@ -44,7 +45,7 @@ const navItems = [
 ];
 
 const secondaryNavItems = [
-    { href: "/dashboard/alumni", icon: Users, label: "Profile" },
+    { href: "/dashboard/alumni", icon: UserIcon, label: "Profile" },
     { href: "/dashboard/settings", icon: Settings, label: "Settings" },
     { href: "/dashboard/contact-us", icon: CircleHelp, label: "Contact Us" },
 ]
