@@ -13,6 +13,7 @@ import { useSearchParams } from 'next/navigation';
 import { ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
 import { useMemo } from 'react';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
 export default function LoginPage({ params }: { params: { role: string } }) {
   const searchParams = useSearchParams();
@@ -24,7 +25,7 @@ export default function LoginPage({ params }: { params: { role: string } }) {
     const { pending } = useFormStatus();
     return (
       <Button className="w-full" disabled={pending} type="submit">
-        {pending ? 'Signing In...' : `Sign In as ${role}`}
+        {pending ? 'Signing In...' : `Sign In`}
       </Button>
     );
   }
@@ -61,6 +62,20 @@ export default function LoginPage({ params }: { params: { role: string } }) {
                 <Label htmlFor="password">Password</Label>
                 <Input id="password" name="password" type="password" required />
               </div>
+               {roleParam === 'government' && (
+                <div className="space-y-2">
+                  <Label htmlFor="institution">Institution</Label>
+                  <Select name="institution">
+                    <SelectTrigger id="institution">
+                      <SelectValue placeholder="Select Institution" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="mait">MAIT, Delhi</SelectItem>
+                      <SelectItem value="msit">MSIT, Delhi</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              )}
               <SubmitButton />
               {message && (
                 <p className="mt-4 p-4 bg-destructive/10 text-destructive text-center text-sm rounded-md">
@@ -77,4 +92,3 @@ export default function LoginPage({ params }: { params: { role: string } }) {
     </div>
   );
 }
-
