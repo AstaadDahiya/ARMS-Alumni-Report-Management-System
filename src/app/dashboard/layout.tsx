@@ -37,6 +37,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 const navItems = [
   { href: "/dashboard", icon: LayoutGrid, label: "Dashboard" },
+  { href: "/dashboard/alumni", icon: Users, label: "Alumni Home" },
   { href: "/dashboard/directory", icon: Folder, label: "Alumni Directory" },
   { href: "/dashboard/events", icon: Calendar, label: "Events" },
   { href: "/dashboard/job-board", icon: Briefcase, label: "Job Board" },
@@ -45,7 +46,7 @@ const navItems = [
 ];
 
 const secondaryNavItems = [
-    { href: "/dashboard/alumni", icon: UserIcon, label: "Profile" },
+    { href: "/dashboard/profile", icon: UserIcon, label: "Profile" },
     { href: "/dashboard/settings", icon: Settings, label: "Settings" },
     { href: "/dashboard/contact-us", icon: CircleHelp, label: "Contact Us" },
 ]
