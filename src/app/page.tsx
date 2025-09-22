@@ -15,7 +15,11 @@ export default function RoleSelectionPage() {
 
   const handleRoleSelection = (role: string) => {
     const roleSlug = role.toLowerCase();
-    router.push(`/${roleSlug}/login`);
+    if (roleSlug === 'alumni') {
+      router.push('/alumni');
+    } else {
+      router.push(`/${roleSlug}/login`);
+    }
   };
 
   return (
