@@ -11,12 +11,13 @@ import { login } from '@/app/actions/auth';
 import { useSearchParams } from 'next/navigation';
 import { ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
+import { useMemo } from 'react';
 
 export default function LoginPage({ params }: { params: { role: string } }) {
   const searchParams = useSearchParams();
   const message = searchParams.get('message');
   const roleParam = params.role;
-  const role = roleParam.charAt(0).toUpperCase() + roleParam.slice(1);
+  const role = useMemo(() => roleParam.charAt(0).toUpperCase() + roleParam.slice(1), [roleParam]);
 
   function SubmitButton() {
     const { pending } = useFormStatus();
