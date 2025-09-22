@@ -1,5 +1,4 @@
 
-
 "use client";
 
 import { Button } from '@/components/ui/button';
@@ -12,13 +11,14 @@ import { login } from '@/app/actions/auth';
 import { useSearchParams } from 'next/navigation';
 import { ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
-import { useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
 export default function LoginPage({ params }: { params: { role: string } }) {
   const searchParams = useSearchParams();
   const message = searchParams.get('message');
-  const roleParam = params.role;
+  const unwrappedParams = React.use(params);
+  const roleParam = unwrappedParams.role;
   const role = useMemo(() => roleParam.charAt(0).toUpperCase() + roleParam.slice(1), [roleParam]);
 
   function SubmitButton() {
