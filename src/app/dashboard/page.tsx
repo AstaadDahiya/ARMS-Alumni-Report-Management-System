@@ -2,7 +2,7 @@
 'use client';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Bell, Users, Calendar, User, Search, Edit, Plus, Briefcase, ChevronDown } from 'lucide-react';
+import { Bell, User, Search, Edit, Plus, Briefcase, ChevronDown, Download, Check, X } from 'lucide-react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
@@ -20,8 +20,9 @@ export default function DashboardPage() {
     <div className="space-y-6">
        <div className="flex justify-between items-center">
          <h1 className="text-3xl font-bold">Dashboard</h1>
-          <div className="w-8 h-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center">
-            <Bell size={18} />
+          <div className="flex items-center gap-2">
+            <Button variant="outline"><Download className="mr-2 h-4 w-4" /> Import</Button>
+            <Button><Plus className="mr-2 h-4 w-4" /> Create</Button>
           </div>
        </div>
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
@@ -31,6 +32,7 @@ export default function DashboardPage() {
           </CardHeader>
           <CardContent>
             <div className="text-4xl font-bold">7,013</div>
+            <div className='w-1/2 h-1 bg-muted-foreground/20 mt-1 rounded-full' />
           </CardContent>
         </Card>
         <Card>
@@ -38,26 +40,26 @@ export default function DashboardPage() {
             <CardTitle className="text-sm font-medium">Upcoming Events</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-4xl font-bold text-green-500">69,88</div>
+            <div className="text-4xl font-bold">5</div>
             <div className='w-1/2 h-1 bg-green-500 mt-1 rounded-full' />
           </CardContent>
         </Card>
-        <Card className="bg-primary text-primary-foreground relative">
+        <Card>
           <CardHeader>
-            <CardTitle className="text-sm font-medium">Notifications</CardTitle>
+            <CardTitle className="text-sm font-medium">Approvals</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="text-4xl font-bold">12</div>
-             <div className='w-1/2 h-1 bg-primary-foreground mt-1 rounded-full' />
+             <div className='w-1/2 h-1 bg-muted-foreground/20 mt-1 rounded-full' />
           </CardContent>
-           <div className="absolute top-3 right-3 w-3 h-3 bg-blue-500 rounded-full border-2 border-primary"></div>
         </Card>
-        <Card className="bg-primary text-primary-foreground">
+        <Card>
           <CardHeader>
             <CardTitle className="text-sm font-medium">Donations</CardTitle>
           </CardHeader>
           <CardContent>
              <div className="text-4xl font-bold">₹12,333</div>
+             <div className='w-1/2 h-1 bg-muted-foreground/20 mt-1 rounded-full' />
           </CardContent>
         </Card>
       </div>
@@ -71,13 +73,14 @@ export default function DashboardPage() {
               <CardContent className="space-y-4">
                 <div className="flex items-center gap-4 p-3 bg-secondary rounded-lg">
                     <Avatar className='h-8 w-8'>
+                        <AvatarImage src="https://picsum.photos/id/301/40/40" />
                         <AvatarFallback><User/></AvatarFallback>
                     </Avatar>
                     <p>Alex Massy updated his profile</p>
                 </div>
                 <div className="flex items-center gap-4 p-3 bg-secondary rounded-lg">
-                    <Avatar className='h-8 w-8'>
-                        <AvatarFallback><User/></AvatarFallback>
+                    <Avatar className='h-8 w-8 bg-black text-white'>
+                        <Bell size={16}/>
                     </Avatar>
                     <p>New event: 2026 Orientation</p>
                 </div>
@@ -92,7 +95,7 @@ export default function DashboardPage() {
                       <AccordionItem value="item-1">
                         <AccordionTrigger className='bg-secondary px-4 rounded-md'>
                             <div className="flex items-center gap-2">
-                               <Users size={18}/> Add New Alumni
+                               <User size={18}/> Add New Alumni
                             </div>
                         </AccordionTrigger>
                         <AccordionContent className='p-4'>
@@ -102,7 +105,7 @@ export default function DashboardPage() {
                       <AccordionItem value="item-2">
                         <AccordionTrigger className='bg-secondary px-4 rounded-md mt-2'>
                            <div className="flex items-center gap-2">
-                                <Calendar size={18}/> Create New Event
+                                <Plus size={18}/> Create New Event
                             </div>
                         </AccordionTrigger>
                         <AccordionContent className='p-4'>

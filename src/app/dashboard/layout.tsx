@@ -14,6 +14,7 @@ import {
   SidebarMenuItem,
   SidebarMenuButton,
   SidebarInset,
+  SidebarFooter,
 } from "@/components/ui/sidebar";
 import {
   LayoutGrid,
@@ -23,41 +24,26 @@ import {
   Newspaper,
   Settings,
   CircleHelp,
-  DollarSign,
   HeartHandshake,
-  User as UserIcon,
-  ChevronDown,
   LogOut,
+  Bell,
+  Folder,
 } from "lucide-react";
 import { Logo } from "@/components/ui/logo";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
 import { logout } from "@/app/actions/auth";
+import { Button } from "@/components/ui/button";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 const navItems = [
   { href: "/dashboard", icon: LayoutGrid, label: "Dashboard" },
-  { href: "/dashboard/alumni", icon: Users, label: "Alumni Directory" },
+  { href: "/dashboard/alumni", icon: Folder, label: "Alumni Directory" },
   { href: "/dashboard/events", icon: Calendar, label: "Events" },
   { href: "/dashboard/job-board", icon: Briefcase, label: "Job Board" },
-  { href: "/dashboard/donations", icon: DollarSign, label: "Donations" },
-  { 
-    href: "/dashboard/mentorship", 
-    icon: HeartHandshake, 
-    label: "Mentorship",
-    subItems: [
-      { href: "/dashboard/mentorship", label: "Overview" },
-      { href: "/dashboard/mentorship-requests", label: "Requests" },
-    ]
-  },
+  { href: "/dashboard/mentorship", icon: HeartHandshake, label: "Mentorship" },
   { href: "/dashboard/news-and-updates", icon: Newspaper, label: "News and Updates" },
 ];
 
 const secondaryNavItems = [
-    { href: "/dashboard/profile", icon: UserIcon, label: "My Profile"},
     { href: "/dashboard/settings", icon: Settings, label: "Settings" },
     { href: "/dashboard/contact-us", icon: CircleHelp, label: "Contact Us" },
 ]
@@ -72,52 +58,22 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
   return (
     <SidebarProvider>
       <Sidebar variant="sidebar" collapsible="icon">
-        <SidebarHeader>
-          <Link href="/" className="flex items-center gap-2 p-4">
-            <Logo className="h-8 w-8" />
-            <h1 className="text-2xl font-semibold text-white">ARMS</h1>
-          </Link>
+        <SidebarHeader className="p-4">
+          <div className="flex items-center justify-between">
+            <Link href="/" className="flex items-center gap-2">
+                <h1 className="text-2xl font-semibold text-white">ARMS</h1>
+            </Link>
+            <div className="relative">
+                <Button variant="ghost" size="icon" className="text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground">
+                    <Bell size={20} />
+                </Button>
+                <div className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full border-2 border-sidebar-background"></div>
+            </div>
+          </div>
         </SidebarHeader>
         <SidebarContent className="p-2">
           <SidebarMenu>
-            <Accordion type="single" collapsible className="w-full">
               {navItems.map((item) => (
-                item.subItems ? (
-                  <AccordionItem value={item.href} key={item.href} className="border-none">
-                    <SidebarMenuItem>
-                      <AccordionTrigger className="p-0 w-full hover:no-underline [&>svg]:hidden">
-                        <SidebarMenuButton
-                          asChild
-                          isActive={pathname.startsWith(item.href)}
-                          tooltip={{ children: item.label, side: "right", align:"center" }}
-                          className="w-full justify-between"
-                        >
-                          <div className="flex items-center gap-2">
-                            <item.icon />
-                            <span>{item.label}</span>
-                            <ChevronDown className="ml-auto h-4 w-4 shrink-0 transition-transform duration-200 group-[&[data-state=open]]:rotate-180" />
-                          </div>
-                        </SidebarMenuButton>
-                      </AccordionTrigger>
-                    </SidebarMenuItem>
-                    <AccordionContent className="pb-0 pl-7">
-                      <SidebarMenu>
-                        {item.subItems.map(subItem => (
-                          <SidebarMenuItem key={subItem.href}>
-                            <SidebarMenuButton
-                              asChild
-                              isActive={pathname === subItem.href}
-                              variant="ghost"
-                              className="h-8 justify-start"
-                            >
-                              <Link href={subItem.href}>- {subItem.label}</Link>
-                            </SidebarMenuButton>
-                          </SidebarMenuItem>
-                        ))}
-                      </SidebarMenu>
-                    </AccordionContent>
-                  </AccordionItem>
-                ) : (
                 <SidebarMenuItem key={item.href}>
                   <SidebarMenuButton
                     asChild
@@ -126,6 +82,7 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
                         ? pathname === item.href
                         : pathname.startsWith(item.href)
                     }
+                    className="h-10 justify-start data-[active=true]:bg-sidebar-primary data-[active=true]:text-sidebar-primary-foreground data-[active=true]:shadow-sm hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
                     tooltip={{ children: item.label, side: "right", align:"center" }}
                   >
                     <Link href={item.href}>
@@ -134,9 +91,7 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
                     </Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
-                )
               ))}
-            </Accordion>
           </SidebarMenu>
           <div className="flex-grow" />
            <SidebarMenu>
@@ -145,6 +100,7 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
                 <SidebarMenuButton
                   asChild
                   isActive={pathname.startsWith(item.href)}
+                  className="h-10 justify-start data-[active=true]:bg-sidebar-primary data-[active=true]:text-sidebar-primary-foreground data-[active=true]:shadow-sm hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
                   tooltip={{ children: item.label, side: "right", align:"center" }}
                 >
                   <Link href={item.href}>
@@ -154,24 +110,30 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
                 </SidebarMenuButton>
               </SidebarMenuItem>
             ))}
-             <SidebarMenuItem>
-                <form action={logout} className="w-full">
-                    <SidebarMenuButton
-                    asChild
-                    tooltip={{ children: "Logout", side: "right", align:"center" }}
-                    >
-                    <button type="submit" className="w-full">
-                        <LogOut />
-                        <span>Logout</span>
-                    </button>
-                    </SidebarMenuButton>
-                </form>
-            </SidebarMenuItem>
           </SidebarMenu>
         </SidebarContent>
+        <SidebarFooter className="p-4 bg-sidebar-accent/50 rounded-lg m-2">
+            <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                    <Avatar className="h-9 w-9">
+                        <AvatarImage src="https://picsum.photos/id/237/100/100" data-ai-hint="user avatar" />
+                        <AvatarFallback>S</AvatarFallback>
+                    </Avatar>
+                    <div className="group-data-[collapsible=icon]:hidden">
+                        <p className="font-semibold text-sm text-sidebar-foreground">Sameer</p>
+                        <p className="text-xs text-sidebar-foreground/70">Admin system</p>
+                    </div>
+                </div>
+                 <form action={logout} className="group-data-[collapsible=icon]:hidden">
+                    <Button variant="ghost" size="icon" type="submit" className="text-sidebar-foreground/70 hover:text-sidebar-foreground">
+                        <LogOut size={18} />
+                    </Button>
+                </form>
+            </div>
+        </SidebarFooter>
       </Sidebar>
       <SidebarInset>
-        <main className="flex-1 p-4 sm:p-6 bg-secondary">{children}</main>
+        <main className="flex-1 p-4 sm:p-6">{children}</main>
       </SidebarInset>
     </SidebarProvider>
   );
