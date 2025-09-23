@@ -51,15 +51,11 @@ const adminNavItems = [
 const alumniNavItems = [
     { href: "/dashboard/alumni", icon: Home, label: "Alumni Home" },
     { href: "/dashboard/profile", icon: UserCog, label: "Profile" },
+    { href: "/dashboard/directory", icon: Folder, label: "Alumni Directory" },
+    { href: "/dashboard/events", icon: Calendar, label: "Events" },
+    { href: "/dashboard/job-board", icon: Briefcase, label: "Job Board" },
+    { href: "/dashboard/mentorship", icon: HeartHandshake, label: "Mentorship" },
 ];
-
-const sharedNavItems = [
-  { href: "/dashboard/directory", icon: Folder, label: "Alumni Directory" },
-  { href: "/dashboard/events", icon: Calendar, label: "Events" },
-  { href: "/dashboard/job-board", icon: Briefcase, label: "Job Board" },
-  { href: "/dashboard/mentorship", icon: HeartHandshake, label: "Mentorship" },
-];
-
 
 const secondaryNavItems = [
     { href: "/dashboard/settings", icon: Settings, label: "Settings" },
@@ -75,8 +71,7 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
 
   // A simple way to determine role. In a real app, you'd get this from session.
   const isAdminPath = pathname.startsWith('/dashboard/admin') || pathname.startsWith('/dashboard/update-requests') || pathname.startsWith('/dashboard/mentorship-requests');
-  const isAlumniPath = !isAdminPath;
-
+  
   const userRole = isAdminPath ? 'admin' : 'alumni';
   
   const navItems = userRole === 'admin' ? adminNavItems : alumniNavItems;
@@ -116,21 +111,6 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               ))}
-                { userRole === 'alumni' && sharedNavItems.map((item) => (
-                    <SidebarMenuItem key={item.href}>
-                    <SidebarMenuButton
-                        asChild
-                        isActive={pathname.startsWith(item.href)}
-                        className="h-10 justify-start data-[active=true]:bg-sidebar-primary data-[active=true]:text-sidebar-primary-foreground data-[active=true]:shadow-sm hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
-                        tooltip={{ children: item.label, side: "right", align:"center" }}
-                    >
-                        <Link href={item.href}>
-                        <item.icon />
-                        <span>{item.label}</span>
-                        </Link>
-                    </SidebarMenuButton>
-                    </SidebarMenuItem>
-                ))}
           </SidebarMenu>
           <div className="flex-grow" />
            <SidebarMenu>
