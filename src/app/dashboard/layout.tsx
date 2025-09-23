@@ -28,7 +28,8 @@ import {
   LogOut,
   Bell,
   Folder,
-  User as UserIcon
+  User as UserIcon,
+  Shield,
 } from "lucide-react";
 import { Logo } from "@/components/ui/logo";
 import { logout } from "@/app/actions/auth";
@@ -36,7 +37,7 @@ import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 const navItems = [
-  { href: "/dashboard", icon: LayoutGrid, label: "Dashboard" },
+  { href: "/dashboard/admin", icon: Shield, label: "Admin Dashboard" },
   { href: "/dashboard/alumni", icon: Users, label: "Alumni Home" },
   { href: "/dashboard/directory", icon: Folder, label: "Alumni Directory" },
   { href: "/dashboard/events", icon: Calendar, label: "Events" },
@@ -54,7 +55,7 @@ const secondaryNavItems = [
 export default function DashboardLayout({ children }: { children: ReactNode }) {
   const pathname = usePathname();
 
-  if (pathname === '/dashboard/student' || pathname === '/dashboard/mentorship/find-a-mentor') {
+  if (pathname === '/dashboard/student' || pathname === '/dashboard/mentorship/find-a-mentor' || pathname === '/dashboard/government') {
     return <>{children}</>;
   }
 

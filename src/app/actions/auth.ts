@@ -33,7 +33,7 @@ export async function login(formData: FormData) {
   } else if (role === 'alumni') {
     redirect('/dashboard/alumni')
   } else if (role === 'admin') {
-    redirect('/dashboard')
+    redirect('/dashboard/admin')
   } else if (role === 'government') {
     redirect('/dashboard/government')
   } else {
