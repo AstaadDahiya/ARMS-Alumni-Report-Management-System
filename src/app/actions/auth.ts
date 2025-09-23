@@ -47,3 +47,5 @@ export async function logout() {
     await supabase.auth.signOut()
     redirect('/')
 }
+
+    
