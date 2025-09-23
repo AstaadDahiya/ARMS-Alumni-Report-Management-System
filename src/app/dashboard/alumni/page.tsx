@@ -7,7 +7,8 @@ import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip, LineChart, L
 import { Briefcase, Calendar, Users, HeartHandshake, FileText, Edit, Newspaper } from "lucide-react";
 import Link from 'next/link';
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { alumni, news } from "@/lib/mock-data";
+import { news } from "@/lib/mock-data";
+import { ChartContainer } from "@/components/ui/chart";
 
 const alumniByIndustry = [
     { industry: "Tech", count: 2800 },
@@ -50,7 +51,7 @@ export default function AlumniDashboardPage() {
     <div className="space-y-6">
         <div className="flex justify-between items-center">
             <div>
-                <h1 className="text-3xl font-bold">Alumni Dashboard</h1>
+                <h1 className="text-3xl font-bold">Alumni Home</h1>
                 <p className="text-muted-foreground">Welcome back! Here's a snapshot of your network.</p>
             </div>
             <Button asChild>
@@ -108,7 +109,7 @@ export default function AlumniDashboardPage() {
                     <CardDescription>Distribution of alumni across various sectors.</CardDescription>
                 </CardHeader>
                 <CardContent className="h-[300px]">
-                     <ResponsiveContainer width="100%" height="100%">
+                    <ChartContainer config={{}} className="h-full w-full">
                         <BarChart data={alumniByIndustry} margin={{ top: 5, right: 20, left: -10, bottom: 5 }}>
                             <CartesianGrid strokeDasharray="3 3" vertical={false} />
                             <XAxis dataKey="industry" tick={{ fontSize: 12 }} />
@@ -121,7 +122,7 @@ export default function AlumniDashboardPage() {
                             />
                             <Bar dataKey="count" fill="hsl(var(--primary))" radius={[4, 4, 0, 0]} />
                         </BarChart>
-                    </ResponsiveContainer>
+                    </ChartContainer>
                 </CardContent>
             </Card>
              <Card className="lg:col-span-2">
@@ -130,7 +131,7 @@ export default function AlumniDashboardPage() {
                     <CardDescription>Total alumni registered over the years.</CardDescription>
                 </CardHeader>
                 <CardContent className="h-[300px]">
-                    <ResponsiveContainer width="100%" height="100%">
+                    <ChartContainer config={{}} className="h-full w-full">
                         <LineChart data={alumniGrowth} margin={{ top: 5, right: 20, left: -10, bottom: 5 }}>
                              <CartesianGrid strokeDasharray="3 3" vertical={false} />
                              <XAxis dataKey="year" tick={{ fontSize: 12 }} />
@@ -143,7 +144,7 @@ export default function AlumniDashboardPage() {
                              />
                             <Line type="monotone" dataKey="count" stroke="hsl(var(--primary))" strokeWidth={2} dot={false} />
                         </LineChart>
-                    </ResponsiveContainer>
+                    </ChartContainer>
                 </CardContent>
             </Card>
         </div>

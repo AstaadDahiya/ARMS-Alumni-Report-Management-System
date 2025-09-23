@@ -17,7 +17,6 @@ import {
   SidebarFooter,
 } from "@/components/ui/sidebar";
 import {
-  LayoutGrid,
   Users,
   Calendar,
   Briefcase,
@@ -30,6 +29,7 @@ import {
   Folder,
   User as UserIcon,
   Shield,
+  Home,
 } from "lucide-react";
 import { Logo } from "@/components/ui/logo";
 import { logout } from "@/app/actions/auth";
@@ -37,13 +37,13 @@ import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 const navItems = [
-  { href: "/dashboard/admin", icon: Shield, label: "Admin Dashboard" },
-  { href: "/dashboard/alumni", icon: Users, label: "Alumni Home" },
+  { href: "/dashboard/alumni", icon: Home, label: "Alumni Home" },
   { href: "/dashboard/directory", icon: Folder, label: "Alumni Directory" },
   { href: "/dashboard/events", icon: Calendar, label: "Events" },
   { href: "/dashboard/job-board", icon: Briefcase, label: "Job Board" },
   { href: "/dashboard/mentorship", icon: HeartHandshake, label: "Mentorship" },
   { href: "/dashboard/news-and-updates", icon: Newspaper, label: "News and Updates" },
+  { href: "/dashboard/admin", icon: Shield, label: "Admin Dashboard", adminOnly: true },
 ];
 
 const secondaryNavItems = [
@@ -58,6 +58,10 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
   if (pathname === '/dashboard/student' || pathname === '/dashboard/mentorship/find-a-mentor' || pathname === '/dashboard/government') {
     return <>{children}</>;
   }
+
+  // A simple way to determine role. In a real app, you'd get this from session.
+  const isAlumni = pathname.includes('/alumni') || pathname.includes('/directory') || pathname.includes('/profile');
+  const isAdmin = pathname.includes('/admin');
 
   return (
     <SidebarProvider>
@@ -77,7 +81,7 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
         </SidebarHeader>
         <SidebarContent className="p-2">
           <SidebarMenu>
-              {navItems.map((item) => (
+              {navItems.filter(item => isAdmin || !item.adminOnly).map((item) => (
                 <SidebarMenuItem key={item.href}>
                   <SidebarMenuButton
                     asChild
@@ -124,8 +128,8 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
                         <AvatarFallback>S</AvatarFallback>
                     </Avatar>
                     <div className="group-data-[collapsible=icon]:hidden">
-                        <p className="font-semibold text-sm text-sidebar-foreground">Sameer</p>
-                        <p className="text-xs text-sidebar-foreground/70">Admin system</p>
+                        <p className="font-semibold text-sm text-sidebar-foreground">{isAdmin ? 'Admin' : 'Alumni User'}</p>
+                        <p className="text-xs text-sidebar-foreground/70">{isAdmin ? 'System Admin': 'Class of 2018'}</p>
                     </div>
                 </div>
                  <form action={logout} className="group-data-[collapsible=icon]:hidden">
