@@ -39,6 +39,8 @@ import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 const allNavItems = [
+  // Admin only
+  { href: "/dashboard/admin", icon: Shield, label: "Admin Dashboard", roles: ['admin'] },
   // Admin & Alumni
   { href: "/dashboard/alumni", icon: Home, label: "Alumni Home", roles: ['alumni'] },
   { href: "/dashboard/profile", icon: UserCog, label: "Profile", roles: ['alumni'] },
@@ -48,8 +50,6 @@ const allNavItems = [
   { href: "/dashboard/mentorship", icon: HeartHandshake, label: "Mentorship", roles: ['admin', 'alumni'] },
   { href: "/dashboard/donations", icon: DollarSign, label: "Donations", roles: ['admin', 'alumni'] },
   { href: "/dashboard/news-and-updates", icon: Newspaper, label: "News and Updates", roles: ['admin', 'alumni'] },
-  // Admin only
-  { href: "/dashboard/admin", icon: Shield, label: "Admin Dashboard", roles: ['admin'] },
 ];
 
 const secondaryNavItems = [
@@ -65,7 +65,8 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
   }
 
   // A simple way to determine role. In a real app, you'd get this from session.
-  const isAdmin = pathname.startsWith('/dashboard/admin');
+  const isAdmin = pathname.startsWith('/dashboard/admin') || pathname === '/dashboard/directory' || pathname === '/dashboard/events' || pathname === '/dashboard/job-board' || pathname === '/dashboard/mentorship' || pathname === '/dashboard/donations' || pathname === '/dashboard/news-and-updates';
+
   const userRole = isAdmin ? 'admin' : 'alumni';
   
   const navItems = allNavItems.filter(item => item.roles.includes(userRole));
@@ -94,7 +95,7 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
                   <SidebarMenuButton
                     asChild
                     isActive={
-                      item.href === pathname || (item.href !== '/dashboard/alumni' && pathname.startsWith(item.href))
+                      item.href === '/dashboard/admin' ? pathname === item.href : (item.href !== '/dashboard/alumni' && pathname.startsWith(item.href))
                     }
                     className="h-10 justify-start data-[active=true]:bg-sidebar-primary data-[active=true]:text-sidebar-primary-foreground data-[active=true]:shadow-sm hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
                     tooltip={{ children: item.label, side: "right", align:"center" }}
