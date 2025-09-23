@@ -1,4 +1,5 @@
 
+
 "use client";
 
 import * as React from "react";
@@ -89,10 +90,14 @@ export default function ProfilePage() {
 
   return (
     <div className="space-y-6">
+       <div>
+        <h1 className="text-3xl font-bold">My Profile</h1>
+        <p className="text-muted-foreground">View and manage your personal information.</p>
+      </div>
       <Card className="overflow-hidden">
         <div className="relative h-32 md:h-48">
           <Image 
-            src="https://picsum.photos/1200/400"
+            src="https://picsum.photos/seed/banner/1200/400"
             alt="Profile banner"
             fill
             className="object-cover"

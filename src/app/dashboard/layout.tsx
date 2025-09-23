@@ -31,21 +31,25 @@ import {
   Shield,
   Home,
   DollarSign,
+  UserCog,
 } from "lucide-react";
 import { Logo } from "@/components/ui/logo";
 import { logout } from "@/app/actions/auth";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
-const navItems = [
-  { href: "/dashboard/alumni", icon: Home, label: "Alumni Home", adminOnly: false },
-  { href: "/dashboard/directory", icon: Folder, label: "Alumni Directory", adminOnly: false },
-  { href: "/dashboard/events", icon: Calendar, label: "Events", adminOnly: false },
-  { href: "/dashboard/job-board", icon: Briefcase, label: "Job Board", adminOnly: false },
-  { href: "/dashboard/mentorship", icon: HeartHandshake, label: "Mentorship", adminOnly: false },
-  { href: "/dashboard/donations", icon: DollarSign, label: "Donations", adminOnly: false },
-  { href: "/dashboard/news-and-updates", icon: Newspaper, label: "News and Updates", adminOnly: false },
-  { href: "/dashboard/admin", icon: Shield, label: "Admin Dashboard", adminOnly: true },
+const allNavItems = [
+  // Admin & Alumni
+  { href: "/dashboard/alumni", icon: Home, label: "Alumni Home", roles: ['alumni'] },
+  { href: "/dashboard/profile", icon: UserCog, label: "Profile", roles: ['alumni'] },
+  { href: "/dashboard/directory", icon: Folder, label: "Alumni Directory", roles: ['admin', 'alumni'] },
+  { href: "/dashboard/events", icon: Calendar, label: "Events", roles: ['admin', 'alumni'] },
+  { href: "/dashboard/job-board", icon: Briefcase, label: "Job Board", roles: ['admin', 'alumni'] },
+  { href: "/dashboard/mentorship", icon: HeartHandshake, label: "Mentorship", roles: ['admin', 'alumni'] },
+  { href: "/dashboard/donations", icon: DollarSign, label: "Donations", roles: ['admin', 'alumni'] },
+  { href: "/dashboard/news-and-updates", icon: Newspaper, label: "News and Updates", roles: ['admin', 'alumni'] },
+  // Admin only
+  { href: "/dashboard/admin", icon: Shield, label: "Admin Dashboard", roles: ['admin'] },
 ];
 
 const secondaryNavItems = [
@@ -61,8 +65,11 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
   }
 
   // A simple way to determine role. In a real app, you'd get this from session.
-  const isAlumni = pathname.includes('/alumni') || pathname.includes('/directory') || !pathname.includes('/admin');
-  const isAdmin = pathname.includes('/admin');
+  const isAdmin = pathname.startsWith('/dashboard/admin');
+  const userRole = isAdmin ? 'admin' : 'alumni';
+  
+  const navItems = allNavItems.filter(item => item.roles.includes(userRole));
+
 
   return (
     <SidebarProvider>
@@ -82,14 +89,12 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
         </SidebarHeader>
         <SidebarContent className="p-2">
           <SidebarMenu>
-              {navItems.filter(item => isAdmin || !item.adminOnly).map((item) => (
+              {navItems.map((item) => (
                 <SidebarMenuItem key={item.href}>
                   <SidebarMenuButton
                     asChild
                     isActive={
-                      item.href === "/dashboard"
-                        ? pathname === item.href
-                        : pathname.startsWith(item.href)
+                      item.href === pathname || (item.href !== '/dashboard/alumni' && pathname.startsWith(item.href))
                     }
                     className="h-10 justify-start data-[active=true]:bg-sidebar-primary data-[active=true]:text-sidebar-primary-foreground data-[active=true]:shadow-sm hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
                     tooltip={{ children: item.label, side: "right", align:"center" }}
