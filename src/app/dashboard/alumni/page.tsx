@@ -3,93 +3,203 @@
 
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Briefcase, Calendar, Folder, HeartHandshake } from "lucide-react";
+import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip, LineChart, Line, CartesianGrid, Legend } from "recharts";
+import { Briefcase, Calendar, Users, HeartHandshake, FileText, Edit, Newspaper } from "lucide-react";
 import Link from 'next/link';
-import Image from 'next/image';
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { alumni, news } from "@/lib/mock-data";
 
-const quickLinks = [
-  { href: "/dashboard/directory", icon: Folder, label: "Alumni Directory", description: "Search and connect with fellow alumni." },
-  { href: "/dashboard/job-board", icon: Briefcase, label: "Job Board", description: "Find exclusive career opportunities." },
-  { href: "/dashboard/events", icon: Calendar, label: "Events", description: "Stay updated on reunions and networking." },
-  { href: "/dashboard/mentorship", icon: HeartHandshake, label: "Mentorship", description: "Guide the next generation of MAIT students." },
+const alumniByIndustry = [
+    { industry: "Tech", count: 2800 },
+    { industry: "Finance", count: 1500 },
+    { industry: "Consulting", count: 1200 },
+    { industry: "Healthcare", count: 800 },
+    { industry: "Education", count: 500 },
+    { industry: "Other", count: 213 },
 ];
 
-export default function AlumniLandingPage() {
+const alumniGrowth = [
+    { year: "2020", count: 4500 },
+    { year: "2021", count: 5100 },
+    { year: "2022", count: 5800 },
+    { year: "2023", count: 6500 },
+    { year: "2024", count: 7013 },
+];
+
+const recentActivity = [
+    {
+        user: "Lakshya Jangra",
+        avatar: "https://picsum.photos/id/302/40/40",
+        action: "posted a new job: 'Hardware Engineer at Nvidia'."
+    },
+    {
+        user: "Aryan Dahiya",
+        avatar: "https://picsum.photos/id/303/40/40",
+        action: "accepted a mentorship request."
+    },
+    {
+        user: "Admin",
+        avatar: null,
+        action: "posted a new event: 'MAIT Annual Alumni Reunion 2024'."
+    }
+]
+
+
+export default function AlumniDashboardPage() {
   return (
-    <div className="space-y-8">
-        <Card className="overflow-hidden">
-            <div className="relative h-48 md:h-64">
-                <Image
-                    src="https://picsum.photos/seed/alumni-banner/1200/400"
-                    alt="Alumni Banner"
-                    fill
-                    className="object-cover"
-                    data-ai-hint="group photo"
-                />
-                <div className="absolute inset-0 bg-black/50 flex flex-col items-center justify-center text-center text-white p-4">
-                    <h1 className="text-4xl font-bold tracking-tight">Welcome, Alumni!</h1>
-                    <p className="mt-2 text-lg max-w-3xl">
-                        Reconnect with your peers, expand your professional network, and give back to the MAIT community.
-                    </p>
-                </div>
+    <div className="space-y-6">
+        <div className="flex justify-between items-center">
+            <div>
+                <h1 className="text-3xl font-bold">Alumni Dashboard</h1>
+                <p className="text-muted-foreground">Welcome back! Here's a snapshot of your network.</p>
             </div>
-        </Card>
+            <Button asChild>
+                <Link href="/dashboard/directory">Explore Directory</Link>
+            </Button>
+        </div>
 
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-            {quickLinks.map((link) => (
-                <Card key={link.href} className="flex flex-col">
-                    <CardHeader>
-                        <div className="flex items-center gap-4">
-                           <div className="p-3 bg-primary/10 text-primary rounded-lg">
-                             <link.icon className="h-6 w-6" />
-                           </div>
-                            <CardTitle>{link.label}</CardTitle>
-                        </div>
-                    </CardHeader>
-                    <CardContent className="flex-grow">
-                        <CardDescription>{link.description}</CardDescription>
-                    </CardContent>
-                    <CardContent>
-                         <Button asChild variant="outline" className="w-full">
-                            <Link href={link.href}>
-                                Go to {link.label}
-                                <ArrowRight className="ml-2 h-4 w-4" />
-                            </Link>
-                        </Button>
-                    </CardContent>
-                </Card>
-            ))}
+            <Card>
+                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                    <CardTitle className="text-sm font-medium">Your Network</CardTitle>
+                    <Users className="h-4 w-4 text-muted-foreground" />
+                </CardHeader>
+                <CardContent>
+                    <div className="text-2xl font-bold">7,013 Alumni</div>
+                    <p className="text-xs text-muted-foreground">+250 since last month</p>
+                </CardContent>
+            </Card>
+             <Card>
+                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                    <CardTitle className="text-sm font-medium">Job Opportunities</CardTitle>
+                    <Briefcase className="h-4 w-4 text-muted-foreground" />
+                </CardHeader>
+                <CardContent>
+                    <div className="text-2xl font-bold">124 Active</div>
+                    <p className="text-xs text-muted-foreground">+15 new this week</p>
+                </CardContent>
+            </Card>
+            <Card>
+                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                    <CardTitle className="text-sm font-medium">Upcoming Events</CardTitle>
+                    <Calendar className="h-4 w-4 text-muted-foreground" />
+                </CardHeader>
+                <CardContent>
+                    <div className="text-2xl font-bold">5 Events</div>
+                    <p className="text-xs text-muted-foreground">Next one: Annual Reunion</p>
+                </CardContent>
+            </Card>
+             <Card>
+                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                    <CardTitle className="text-sm font-medium">Total Donations</CardTitle>
+                    <HeartHandshake className="h-4 w-4 text-muted-foreground" />
+                </CardHeader>
+                <CardContent>
+                    <div className="text-2xl font-bold">₹1.2 Cr</div>
+                    <p className="text-xs text-muted-foreground">Supporting student scholarships</p>
+                </CardContent>
+            </Card>
         </div>
-        
-         <Card>
-            <CardHeader>
-                <CardTitle>Your Alumni Journey</CardTitle>
-                <CardDescription>Explore ways to stay involved and make an impact.</CardDescription>
-            </CardHeader>
-            <CardContent className="grid md:grid-cols-3 gap-6">
-                <div className="space-y-2">
-                    <h3 className="font-semibold">Update Your Profile</h3>
-                    <p className="text-sm text-muted-foreground">Keep your information current so others can find you and you don't miss out on relevant opportunities.</p>
-                     <Button asChild variant="secondary">
-                        <Link href="/dashboard/profile">Manage Profile</Link>
+
+        <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
+            <Card className="lg:col-span-3">
+                <CardHeader>
+                    <CardTitle>Alumni by Industry</CardTitle>
+                    <CardDescription>Distribution of alumni across various sectors.</CardDescription>
+                </CardHeader>
+                <CardContent className="h-[300px]">
+                     <ResponsiveContainer width="100%" height="100%">
+                        <BarChart data={alumniByIndustry} margin={{ top: 5, right: 20, left: -10, bottom: 5 }}>
+                            <CartesianGrid strokeDasharray="3 3" vertical={false} />
+                            <XAxis dataKey="industry" tick={{ fontSize: 12 }} />
+                            <YAxis tick={{ fontSize: 12 }} />
+                            <Tooltip
+                                contentStyle={{
+                                    backgroundColor: 'hsl(var(--background))',
+                                    borderColor: 'hsl(var(--border))',
+                                }}
+                            />
+                            <Bar dataKey="count" fill="hsl(var(--primary))" radius={[4, 4, 0, 0]} />
+                        </BarChart>
+                    </ResponsiveContainer>
+                </CardContent>
+            </Card>
+             <Card className="lg:col-span-2">
+                <CardHeader>
+                    <CardTitle>Network Growth</CardTitle>
+                    <CardDescription>Total alumni registered over the years.</CardDescription>
+                </CardHeader>
+                <CardContent className="h-[300px]">
+                    <ResponsiveContainer width="100%" height="100%">
+                        <LineChart data={alumniGrowth} margin={{ top: 5, right: 20, left: -10, bottom: 5 }}>
+                             <CartesianGrid strokeDasharray="3 3" vertical={false} />
+                             <XAxis dataKey="year" tick={{ fontSize: 12 }} />
+                            <YAxis tick={{ fontSize: 12 }} />
+                            <Tooltip
+                                contentStyle={{
+                                    backgroundColor: 'hsl(var(--background))',
+                                    borderColor: 'hsl(var(--border))',
+                                }}
+                             />
+                            <Line type="monotone" dataKey="count" stroke="hsl(var(--primary))" strokeWidth={2} dot={false} />
+                        </LineChart>
+                    </ResponsiveContainer>
+                </CardContent>
+            </Card>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <Card>
+                <CardHeader>
+                    <CardTitle>Recent Activity</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                    {recentActivity.map((activity, index) => (
+                        <div key={index} className="flex items-start gap-3">
+                             <Avatar className="h-9 w-9">
+                                {activity.avatar && <AvatarImage src={activity.avatar} />}
+                                <AvatarFallback>{activity.user.charAt(0)}</AvatarFallback>
+                            </Avatar>
+                            <p className="text-sm text-muted-foreground">
+                                <span className="font-semibold text-foreground">{activity.user}</span> {activity.action}
+                            </p>
+                        </div>
+                    ))}
+                </CardContent>
+            </Card>
+            <Card>
+                <CardHeader>
+                    <CardTitle>Quick Actions</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-3">
+                    <Button variant="outline" className="w-full justify-start" asChild>
+                        <Link href="/dashboard/profile"><Edit className="mr-2 h-4 w-4" /> Update Your Profile</Link>
                     </Button>
-                </div>
-                 <div className="space-y-2">
-                    <h3 className="font-semibold">Post a Job</h3>
-                    <p className="text-sm text-muted-foreground">Have an opening at your company? Share it with the talented pool of MAIT alumni and students.</p>
-                     <Button asChild variant="secondary">
-                        <Link href="/dashboard/job-board">Share Opportunity</Link>
+                    <Button variant="outline" className="w-full justify-start" asChild>
+                       <Link href="/dashboard/job-board"><Briefcase className="mr-2 h-4 w-4" /> Post a Job Opportunity</Link>
                     </Button>
-                </div>
-                 <div className="space-y-2">
-                    <h3 className="font-semibold">Donate</h3>
-                    <p className="text-sm text-muted-foreground">Support the next generation and key campus initiatives by contributing to a campaign.</p>
-                     <Button asChild variant="secondary">
-                        <Link href="/dashboard/donations">Give Back</Link>
+                     <Button variant="outline" className="w-full justify-start" asChild>
+                       <Link href="/dashboard/mentorship"><HeartHandshake className="mr-2 h-4 w-4" /> Become a Mentor</Link>
                     </Button>
-                </div>
-            </CardContent>
-        </Card>
+                </CardContent>
+            </Card>
+            <Card>
+                <CardHeader>
+                    <CardTitle>Latest News</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-3">
+                    {news.slice(0, 3).map(article => (
+                        <Link href="/dashboard/news-and-updates" key={article.id} className="block hover:bg-muted p-2 rounded-md">
+                            <h4 className="font-semibold text-sm truncate">{article.title}</h4>
+                            <p className="text-xs text-muted-foreground">{article.category}</p>
+                        </Link>
+                    ))}
+                    <Button variant="ghost" asChild className="w-full">
+                        <Link href="/dashboard/news-and-updates">View All News</Link>
+                    </Button>
+                </CardContent>
+            </Card>
+        </div>
     </div>
   );
 }
