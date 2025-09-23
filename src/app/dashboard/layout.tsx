@@ -37,17 +37,16 @@ import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 const navItems = [
-  { href: "/dashboard/alumni", icon: Home, label: "Alumni Home" },
-  { href: "/dashboard/directory", icon: Folder, label: "Alumni Directory" },
-  { href: "/dashboard/events", icon: Calendar, label: "Events" },
-  { href: "/dashboard/job-board", icon: Briefcase, label: "Job Board" },
-  { href: "/dashboard/mentorship", icon: HeartHandshake, label: "Mentorship" },
-  { href: "/dashboard/news-and-updates", icon: Newspaper, label: "News and Updates" },
+  { href: "/dashboard/alumni", icon: Home, label: "Alumni Home", adminOnly: false },
+  { href: "/dashboard/directory", icon: Folder, label: "Alumni Directory", adminOnly: false },
+  { href: "/dashboard/events", icon: Calendar, label: "Events", adminOnly: false },
+  { href: "/dashboard/job-board", icon: Briefcase, label: "Job Board", adminOnly: false },
+  { href: "/dashboard/mentorship", icon: HeartHandshake, label: "Mentorship", adminOnly: false },
+  { href: "/dashboard/news-and-updates", icon: Newspaper, label: "News and Updates", adminOnly: false },
   { href: "/dashboard/admin", icon: Shield, label: "Admin Dashboard", adminOnly: true },
 ];
 
 const secondaryNavItems = [
-    { href: "/dashboard/profile", icon: UserIcon, label: "Profile" },
     { href: "/dashboard/settings", icon: Settings, label: "Settings" },
     { href: "/dashboard/contact-us", icon: CircleHelp, label: "Contact Us" },
 ]
@@ -60,7 +59,7 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
   }
 
   // A simple way to determine role. In a real app, you'd get this from session.
-  const isAlumni = pathname.includes('/alumni') || pathname.includes('/directory') || pathname.includes('/profile');
+  const isAlumni = pathname.includes('/alumni') || pathname.includes('/directory') || !pathname.includes('/admin');
   const isAdmin = pathname.includes('/admin');
 
   return (

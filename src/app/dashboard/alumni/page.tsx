@@ -1,206 +1,337 @@
 
 "use client";
 
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip, LineChart, Line, CartesianGrid, Legend } from "recharts";
-import { Briefcase, Calendar, Users, HeartHandshake, FileText, Edit, Newspaper } from "lucide-react";
+import * as React from "react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import Image from "next/image";
+import { Briefcase, Building, GraduationCap, HardHat, Mail, MapPin, Phone, User, Settings, ArrowRight, UserPlus } from "lucide-react";
 import Link from 'next/link';
+
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { useToast } from "@/hooks/use-toast";
+import { alumni } from "@/lib/mock-data";
+import { Textarea } from "@/components/ui/textarea";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { news } from "@/lib/mock-data";
-import { ChartContainer } from "@/components/ui/chart";
+import { Badge } from "@/components/ui/badge";
+import { Separator } from "@/components/ui/separator";
 
-const alumniByIndustry = [
-    { industry: "Tech", count: 2800 },
-    { industry: "Finance", count: 1500 },
-    { industry: "Consulting", count: 1200 },
-    { industry: "Healthcare", count: 800 },
-    { industry: "Education", count: 500 },
-    { industry: "Other", count: 213 },
-];
+const profileFormSchema = z.object({
+  name: z.string().min(2, "Name must be at least 2 characters."),
+  email: z.string().email(),
+  company: z.string().optional(),
+  jobTitle: z.string().optional(),
+  location: z.string().optional(),
+  skills: z.string().optional(),
+  bio: z.string().optional(),
+});
 
-const alumniGrowth = [
-    { year: "2020", count: 4500 },
-    { year: "2021", count: 5100 },
-    { year: "2022", count: 5800 },
-    { year: "2023", count: 6500 },
-    { year: "2024", count: 7013 },
-];
+type ProfileFormValues = z.infer<typeof profileFormSchema>;
 
-const recentActivity = [
-    {
-        user: "Lakshya Jangra",
-        avatar: "https://picsum.photos/id/302/40/40",
-        action: "posted a new job: 'Hardware Engineer at Nvidia'."
+// Assuming user ID 1 is the logged-in user
+const initialUser = alumni.find(a => a.id === 1) || alumni[0];
+const initialBio = "A passionate software engineer with over 6 years of experience in building scalable web applications. Specialized in front-end technologies like React and Next.js, with a strong focus on creating intuitive user experiences. Always eager to learn new technologies and take on challenging projects. In my free time, I enjoy contributing to open-source projects and mentoring junior developers.";
+
+
+export default function AlumniHomePage() {
+  const [isEditing, setIsEditing] = React.useState(false);
+  const [currentUser, setCurrentUser] = React.useState(initialUser);
+  const [bio, setBio] = React.useState(initialBio);
+  
+  const { toast } = useToast();
+
+  const form = useForm<ProfileFormValues>({
+    resolver: zodResolver(profileFormSchema),
+    defaultValues: {
+      name: currentUser.name,
+      email: currentUser.email,
+      company: currentUser.company,
+      jobTitle: currentUser.jobTitle,
+      location: currentUser.location,
+      skills: currentUser.skills.join(', '),
+      bio: bio,
     },
-    {
-        user: "Aryan Dahiya",
-        avatar: "https://picsum.photos/id/303/40/40",
-        action: "accepted a mentorship request."
+    values: { // Use values to reflect state changes in the form
+        name: currentUser.name,
+        email: currentUser.email,
+        company: currentUser.company,
+        jobTitle: currentUser.jobTitle,
+        location: currentUser.location,
+        skills: currentUser.skills.join(', '),
+        bio: bio,
     },
-    {
-        user: "Admin",
-        avatar: null,
-        action: "posted a new event: 'MAIT Annual Alumni Reunion 2024'."
-    }
-]
+    mode: "onChange",
+  });
 
+  function onSubmit(data: ProfileFormValues) {
+    toast({
+      title: "Profile Update Submitted",
+      description: "Your changes have been sent for administrator validation.",
+    });
+    
+    // Optimistically update the UI
+    setCurrentUser(prev => ({
+        ...prev,
+        name: data.name ?? prev.name,
+        email: data.email ?? prev.email,
+        company: data.company ?? prev.company,
+        jobTitle: data.jobTitle ?? prev.jobTitle,
+        location: data.location ?? prev.location,
+        skills: data.skills?.split(',').map(s => s.trim()) ?? prev.skills,
+    }));
+    setBio(data.bio ?? bio);
 
-export default function AlumniDashboardPage() {
+    setIsEditing(false);
+  }
+
   return (
     <div className="space-y-6">
-        <div className="flex justify-between items-center">
-            <div>
-                <h1 className="text-3xl font-bold">Alumni Home</h1>
-                <p className="text-muted-foreground">Welcome back! Here's a snapshot of your network.</p>
+      <Card className="overflow-hidden">
+        <div className="relative h-32 md:h-48">
+          <Image 
+            src="https://picsum.photos/seed/banner/1200/400"
+            alt="Profile banner"
+            fill
+            className="object-cover"
+            data-ai-hint="abstract banner"
+          />
+        </div>
+        <div className="px-6 pb-6">
+          <div className="flex flex-col sm:flex-row items-start -mt-16 sm:-mt-20">
+            <Avatar className="h-32 w-32 border-4 border-background">
+              <AvatarImage src={currentUser.avatarUrl} data-ai-hint="user avatar" />
+              <AvatarFallback>{currentUser.name.charAt(0)}</AvatarFallback>
+            </Avatar>
+            <div className="mt-4 sm:ml-6 flex-grow">
+              <div className="flex flex-col sm:flex-row justify-between items-start">
+                  <div>
+                    <h1 className="text-3xl font-bold">{currentUser.name}</h1>
+                    <p className="text-lg text-muted-foreground">{currentUser.jobTitle} at {currentUser.company}</p>
+                    <p className="text-sm text-muted-foreground mt-1">{currentUser.location}</p>
+                  </div>
+                   <Button onClick={() => setIsEditing(!isEditing)} variant="outline" className="mt-4 sm:mt-0">
+                      <Settings className="mr-2 h-4 w-4" />
+                      {isEditing ? 'Cancel' : 'Edit Profile'}
+                   </Button>
+              </div>
             </div>
-            <Button asChild>
-                <Link href="/dashboard/directory">Explore Directory</Link>
-            </Button>
+          </div>
         </div>
-
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-            <Card>
-                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                    <CardTitle className="text-sm font-medium">Your Network</CardTitle>
-                    <Users className="h-4 w-4 text-muted-foreground" />
-                </CardHeader>
-                <CardContent>
-                    <div className="text-2xl font-bold">7,013 Alumni</div>
-                    <p className="text-xs text-muted-foreground">+250 since last month</p>
-                </CardContent>
-            </Card>
-             <Card>
-                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                    <CardTitle className="text-sm font-medium">Job Opportunities</CardTitle>
-                    <Briefcase className="h-4 w-4 text-muted-foreground" />
-                </CardHeader>
-                <CardContent>
-                    <div className="text-2xl font-bold">124 Active</div>
-                    <p className="text-xs text-muted-foreground">+15 new this week</p>
-                </CardContent>
-            </Card>
-            <Card>
-                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                    <CardTitle className="text-sm font-medium">Upcoming Events</CardTitle>
-                    <Calendar className="h-4 w-4 text-muted-foreground" />
-                </CardHeader>
-                <CardContent>
-                    <div className="text-2xl font-bold">5 Events</div>
-                    <p className="text-xs text-muted-foreground">Next one: Annual Reunion</p>
-                </CardContent>
-            </Card>
-             <Card>
-                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                    <CardTitle className="text-sm font-medium">Total Donations</CardTitle>
-                    <HeartHandshake className="h-4 w-4 text-muted-foreground" />
-                </CardHeader>
-                <CardContent>
-                    <div className="text-2xl font-bold">₹1.2 Cr</div>
-                    <p className="text-xs text-muted-foreground">Supporting student scholarships</p>
-                </CardContent>
-            </Card>
-        </div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
-            <Card className="lg:col-span-3">
-                <CardHeader>
-                    <CardTitle>Alumni by Industry</CardTitle>
-                    <CardDescription>Distribution of alumni across various sectors.</CardDescription>
-                </CardHeader>
-                <CardContent className="h-[300px]">
-                    <ChartContainer config={{}} className="h-full w-full">
-                        <BarChart data={alumniByIndustry} margin={{ top: 5, right: 20, left: -10, bottom: 5 }}>
-                            <CartesianGrid strokeDasharray="3 3" vertical={false} />
-                            <XAxis dataKey="industry" tick={{ fontSize: 12 }} />
-                            <YAxis tick={{ fontSize: 12 }} />
-                            <Tooltip
-                                contentStyle={{
-                                    backgroundColor: 'hsl(var(--background))',
-                                    borderColor: 'hsl(var(--border))',
-                                }}
-                            />
-                            <Bar dataKey="count" fill="hsl(var(--primary))" radius={[4, 4, 0, 0]} />
-                        </BarChart>
-                    </ChartContainer>
-                </CardContent>
-            </Card>
-             <Card className="lg:col-span-2">
-                <CardHeader>
-                    <CardTitle>Network Growth</CardTitle>
-                    <CardDescription>Total alumni registered over the years.</CardDescription>
-                </CardHeader>
-                <CardContent className="h-[300px]">
-                    <ChartContainer config={{}} className="h-full w-full">
-                        <LineChart data={alumniGrowth} margin={{ top: 5, right: 20, left: -10, bottom: 5 }}>
-                             <CartesianGrid strokeDasharray="3 3" vertical={false} />
-                             <XAxis dataKey="year" tick={{ fontSize: 12 }} />
-                            <YAxis tick={{ fontSize: 12 }} />
-                            <Tooltip
-                                contentStyle={{
-                                    backgroundColor: 'hsl(var(--background))',
-                                    borderColor: 'hsl(var(--border))',
-                                }}
-                             />
-                            <Line type="monotone" dataKey="count" stroke="hsl(var(--primary))" strokeWidth={2} dot={false} />
-                        </LineChart>
-                    </ChartContainer>
-                </CardContent>
-            </Card>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <Card>
-                <CardHeader>
-                    <CardTitle>Recent Activity</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                    {recentActivity.map((activity, index) => (
-                        <div key={index} className="flex items-start gap-3">
-                             <Avatar className="h-9 w-9">
-                                {activity.avatar && <AvatarImage src={activity.avatar} />}
-                                <AvatarFallback>{activity.user.charAt(0)}</AvatarFallback>
-                            </Avatar>
-                            <p className="text-sm text-muted-foreground">
-                                <span className="font-semibold text-foreground">{activity.user}</span> {activity.action}
-                            </p>
+      </Card>
+      
+      {isEditing ? (
+        <Card>
+            <CardHeader>
+                <CardTitle>Edit Profile</CardTitle>
+                <CardDescription>Update your profile information. Changes will be reviewed by an administrator.</CardDescription>
+            </CardHeader>
+            <CardContent>
+             <Form {...form}>
+              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+                <div className="grid md:grid-cols-2 gap-8">
+                  <FormField
+                    control={form.control}
+                    name="name"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Full Name</FormLabel>
+                        <FormControl>
+                          <Input placeholder="Your full name" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="email"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Email</FormLabel>
+                        <FormControl>
+                          <Input type="email" placeholder="your.email@example.com" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="company"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Company</FormLabel>
+                        <FormControl>
+                          <Input placeholder="Your current company" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="jobTitle"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Job Title</FormLabel>
+                        <FormControl>
+                          <Input placeholder="Your job title" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="location"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Location</FormLabel>
+                        <FormControl>
+                          <Input placeholder="City, State" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="skills"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Skills</FormLabel>
+                        <FormControl>
+                          <Input placeholder="Comma-separated skills" {...field} />
+                        </FormControl>
+                        <FormDescription>
+                          Enter your skills separated by commas.
+                        </FormDescription>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                   <div className="md:col-span-2">
+                     <FormField
+                        control={form.control}
+                        name="bio"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>About</FormLabel>
+                            <FormControl>
+                              <Textarea placeholder="Tell us a little bit about yourself" className="min-h-[120px]" {...field} />
+                            </FormControl>
+                             <FormDescription>
+                                A brief bio to show on your profile.
+                            </FormDescription>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                   </div>
+                </div>
+                <div className="flex gap-2">
+                    <Button type="submit">Submit for Validation</Button>
+                    <Button variant="ghost" type="button" onClick={() => setIsEditing(false)}>Cancel</Button>
+                </div>
+              </form>
+            </Form>
+            </CardContent>
+        </Card>
+      ) : (
+        <div className="grid lg:grid-cols-3 gap-6">
+            <div className="lg:col-span-2 space-y-6">
+                 <Card>
+                    <CardHeader>
+                        <CardTitle className="flex items-center gap-2 text-xl"><User className="h-5 w-5" /> About</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                        <p className="text-muted-foreground leading-relaxed">{bio}</p>
+                    </CardContent>
+                </Card>
+                 <Card>
+                    <CardHeader>
+                        <CardTitle className="flex items-center gap-2 text-xl"><Briefcase className="h-5 w-5" /> Experience</CardTitle>
+                    </CardHeader>
+                    <CardContent className="space-y-6">
+                        <div className="flex gap-4">
+                            <div className="p-3 bg-muted rounded-md h-fit"><Building className="h-5 w-5"/></div>
+                            <div>
+                                <h3 className="font-semibold text-lg">{currentUser.jobTitle}</h3>
+                                <p>{currentUser.company} &middot; {currentUser.location}</p>
+                                <p className="text-sm text-muted-foreground">2020 - Present &middot; {new Date().getFullYear() - 2020} years</p>
+                            </div>
                         </div>
-                    ))}
-                </CardContent>
-            </Card>
-            <Card>
-                <CardHeader>
-                    <CardTitle>Quick Actions</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-3">
-                    <Button variant="outline" className="w-full justify-start" asChild>
-                        <Link href="/dashboard/profile"><Edit className="mr-2 h-4 w-4" /> Update Your Profile</Link>
-                    </Button>
-                    <Button variant="outline" className="w-full justify-start" asChild>
-                       <Link href="/dashboard/job-board"><Briefcase className="mr-2 h-4 w-4" /> Post a Job Opportunity</Link>
-                    </Button>
-                     <Button variant="outline" className="w-full justify-start" asChild>
-                       <Link href="/dashboard/mentorship"><HeartHandshake className="mr-2 h-4 w-4" /> Become a Mentor</Link>
-                    </Button>
-                </CardContent>
-            </Card>
-            <Card>
-                <CardHeader>
-                    <CardTitle>Latest News</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-3">
-                    {news.slice(0, 3).map(article => (
-                        <Link href="/dashboard/news-and-updates" key={article.id} className="block hover:bg-muted p-2 rounded-md">
-                            <h4 className="font-semibold text-sm truncate">{article.title}</h4>
-                            <p className="text-xs text-muted-foreground">{article.category}</p>
-                        </Link>
-                    ))}
-                    <Button variant="ghost" asChild className="w-full">
-                        <Link href="/dashboard/news-and-updates">View All News</Link>
-                    </Button>
-                </CardContent>
-            </Card>
+                    </CardContent>
+                </Card>
+                 <Card>
+                    <CardHeader>
+                        <CardTitle className="flex items-center gap-2 text-xl"><GraduationCap className="h-5 w-5" /> Education</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                        <div className="flex gap-4">
+                             <div className="p-3 bg-muted rounded-md h-fit"><GraduationCap className="h-5 w-5"/></div>
+                             <div>
+                                <h3 className="font-semibold text-lg">Maharaja Agrasen Institute of Technology</h3>
+                                <p>Bachelor of Technology, {currentUser.major}</p>
+                                <p className="text-sm text-muted-foreground">Graduated {currentUser.graduationYear}</p>
+                            </div>
+                        </div>
+                    </CardContent>
+                </Card>
+                 <Card>
+                    <CardHeader>
+                        <CardTitle className="flex items-center gap-2 text-xl"><HardHat className="h-5 w-5" /> Skills</CardTitle>
+                    </CardHeader>
+                    <CardContent className="flex flex-wrap gap-2">
+                       {currentUser.skills.map(skill => <Badge key={skill} variant="secondary" className="text-base py-1 px-3">{skill}</Badge>)}
+                    </CardContent>
+                </Card>
+            </div>
+             <div className="space-y-6">
+                <Card>
+                    <CardHeader>
+                        <CardTitle className="text-xl">Mentorship Program</CardTitle>
+                        <CardDescription>Share your knowledge and experience with the next generation of MAIT students.</CardDescription>
+                    </CardHeader>
+                    <CardContent className="space-y-4">
+                         <Button size="lg" className="w-full">
+                            <UserPlus className="mr-2 h-5 w-5" />Become a Mentor
+                         </Button>
+                         <Button size="lg" variant="outline" className="w-full" asChild>
+                            <Link href="/dashboard/mentorship-requests">
+                                Review Requests <ArrowRight className="ml-2 h-5 w-5" />
+                            </Link>
+                         </Button>
+                    </CardContent>
+                </Card>
+                 <Card>
+                    <CardHeader>
+                        <CardTitle>Contact Information</CardTitle>
+                    </CardHeader>
+                    <CardContent className="space-y-4">
+                       <div className="flex items-center gap-3">
+                            <Mail className="text-muted-foreground h-4 w-4"/>
+                            <a href={`mailto:${currentUser.email}`} className="text-primary hover:underline">{currentUser.email}</a>
+                       </div>
+                       <Separator/>
+                       <div className="flex items-center gap-3">
+                            <Phone className="text-muted-foreground h-4 w-4"/>
+                            <span>+91 123-456-7890</span>
+                       </div>
+                       <Separator/>
+                       <div className="flex items-center gap-3">
+                            <MapPin className="text-muted-foreground h-4 w-4"/>
+                            <span>{currentUser.location}</span>
+                       </div>
+                    </CardContent>
+                </Card>
+             </div>
         </div>
+      )}
     </div>
   );
 }
