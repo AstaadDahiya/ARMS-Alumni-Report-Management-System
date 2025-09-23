@@ -30,6 +30,7 @@ import {
   User as UserIcon,
   Shield,
   Home,
+  DollarSign,
 } from "lucide-react";
 import { Logo } from "@/components/ui/logo";
 import { logout } from "@/app/actions/auth";
@@ -42,6 +43,7 @@ const navItems = [
   { href: "/dashboard/events", icon: Calendar, label: "Events", adminOnly: false },
   { href: "/dashboard/job-board", icon: Briefcase, label: "Job Board", adminOnly: false },
   { href: "/dashboard/mentorship", icon: HeartHandshake, label: "Mentorship", adminOnly: false },
+  { href: "/dashboard/donations", icon: DollarSign, label: "Donations", adminOnly: false },
   { href: "/dashboard/news-and-updates", icon: Newspaper, label: "News and Updates", adminOnly: false },
   { href: "/dashboard/admin", icon: Shield, label: "Admin Dashboard", adminOnly: true },
 ];
