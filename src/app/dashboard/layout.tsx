@@ -41,7 +41,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 const allNavItems = [
   // Admin only
   { href: "/dashboard/admin", icon: Shield, label: "Admin Dashboard", roles: ['admin'] },
-  // Admin & Alumni
+  // Alumni and others
   { href: "/dashboard/alumni", icon: Home, label: "Alumni Home", roles: ['alumni'] },
   { href: "/dashboard/profile", icon: UserCog, label: "Profile", roles: ['alumni'] },
   { href: "/dashboard/directory", icon: Folder, label: "Alumni Directory", roles: ['admin', 'alumni'] },
@@ -65,12 +65,12 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
   }
 
   // A simple way to determine role. In a real app, you'd get this from session.
-  const isAdmin = pathname.startsWith('/dashboard/admin') || pathname === '/dashboard/directory' || pathname === '/dashboard/events' || pathname === '/dashboard/job-board' || pathname === '/dashboard/mentorship' || pathname === '/dashboard/donations' || pathname === '/dashboard/news-and-updates';
-
+  const isAlumni = pathname.startsWith('/dashboard/alumni') || pathname.startsWith('/dashboard/profile');
+  const isAdmin = !isAlumni && (pathname.startsWith('/dashboard/admin') || pathname.startsWith('/dashboard/directory') || pathname.startsWith('/dashboard/events') || pathname.startsWith('/dashboard/job-board') || pathname.startsWith('/dashboard/mentorship') || pathname.startsWith('/dashboard/donations') || pathname.startsWith('/dashboard/news-and-updates'));
+  
   const userRole = isAdmin ? 'admin' : 'alumni';
   
   const navItems = allNavItems.filter(item => item.roles.includes(userRole));
-
 
   return (
     <SidebarProvider>
@@ -95,7 +95,7 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
                   <SidebarMenuButton
                     asChild
                     isActive={
-                      item.href === '/dashboard/admin' ? pathname === item.href : (item.href !== '/dashboard/alumni' && pathname.startsWith(item.href))
+                      pathname.startsWith(item.href) && (item.href !== '/dashboard' || pathname === item.href)
                     }
                     className="h-10 justify-start data-[active=true]:bg-sidebar-primary data-[active=true]:text-sidebar-primary-foreground data-[active=true]:shadow-sm hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
                     tooltip={{ children: item.label, side: "right", align:"center" }}
