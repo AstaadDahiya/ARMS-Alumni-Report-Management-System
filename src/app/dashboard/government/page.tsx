@@ -3,8 +3,9 @@
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { BarChart, LineChart, Download, Settings, Filter, HelpCircle } from "lucide-react";
+import { BarChart, LineChart, Download, Settings, Filter, HelpCircle, LogOut } from "lucide-react";
 import { Bar, BarChart as RechartsBarChart, Line, LineChart as RechartsLineChart, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
+import { logout } from "@/app/actions/auth";
 
 const institutionData = [
   { name: 'PU', 'Placement %': 82, 'Research Index': 75 },
@@ -51,6 +52,12 @@ export default function GovernmentPage() {
             <div className="flex items-center gap-2">
                 <Button variant="outline" size="sm"><Download className="mr-2 h-4 w-4"/>Export</Button>
                 <Button variant="outline" size="sm"><Settings className="mr-2 h-4 w-4"/>Configure</Button>
+                <form action={logout}>
+                    <Button variant="outline" size="sm">
+                        <LogOut className="mr-2 h-4 w-4" />
+                        Logout
+                    </Button>
+                </form>
             </div>
           </div>
         </div>
@@ -171,5 +178,3 @@ export default function GovernmentPage() {
     </div>
   );
 }
-
-    
