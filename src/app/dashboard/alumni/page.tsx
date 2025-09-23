@@ -12,7 +12,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 const currentUser = alumni[0]; // mock current user
 
 const quickLinks = [
-    { label: "Alumni Directory", href: "/dashboard/directory", icon: Folder },
+    { label: "Find other Alumni", href: "/dashboard/directory", icon: Folder },
     { label: "Upcoming Events", href: "/dashboard/events", icon: Calendar },
     { label: "Job Board", href: "/dashboard/job-board", icon: Briefcase },
 ];

@@ -51,9 +51,6 @@ const adminNavItems = [
 const alumniNavItems = [
     { href: "/dashboard/alumni", icon: Home, label: "Alumni Home" },
     { href: "/dashboard/profile", icon: UserCog, label: "Profile" },
-    { href: "/dashboard/directory", icon: Folder, label: "Alumni Directory" },
-    { href: "/dashboard/events", icon: Calendar, label: "Events" },
-    { href: "/dashboard/job-board", icon: Briefcase, label: "Job Board" },
     { href: "/dashboard/mentorship", icon: HeartHandshake, label: "Mentorship" },
 ];
 
