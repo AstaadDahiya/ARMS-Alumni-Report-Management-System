@@ -46,7 +46,6 @@ const adminNavItems = [
   { href: "/dashboard/job-board", icon: Briefcase, label: "Job Board" },
   { href: "/dashboard/donations", icon: DollarSign, label: "Donations" },
   { href: "/dashboard/news-and-updates", icon: Newspaper, label: "News and Updates" },
-  { href: "/dashboard/mentorship", icon: HeartHandshake, label: "Mentorship" },
   { href: "/dashboard/mentorship-requests", icon: UserPlus, label: "Mentorship Requests" },
 ];
 
