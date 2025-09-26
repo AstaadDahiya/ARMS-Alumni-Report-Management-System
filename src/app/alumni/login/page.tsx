@@ -1,6 +1,7 @@
 
 "use client";
 
+import * as React from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { GraduationCapIcon } from '@/components/ui/logo';
@@ -12,19 +13,47 @@ import { useSearchParams } from 'next/navigation';
 import { ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
 
-export default function AlumniLoginPage() {
+function SubmitButton() {
+  const { pending } = useFormStatus();
+  return (
+    <Button className="w-full" disabled={pending} type="submit">
+      {pending ? 'Signing In...' : 'Sign In'}
+    </Button>
+  );
+}
+
+function AlumniLoginForm() {
   const searchParams = useSearchParams();
   const message = searchParams.get('message');
 
-  function SubmitButton() {
-    const { pending } = useFormStatus();
-    return (
-      <Button className="w-full" disabled={pending} type="submit">
-        {pending ? 'Signing In...' : 'Sign In'}
-      </Button>
-    );
-  }
+  return (
+    <form action={login} className="space-y-4">
+      <input type="hidden" name="role" value="alumni" />
+      <div className="space-y-2">
+        <Label htmlFor="email">Email</Label>
+        <Input
+          id="email"
+          name="email"
+          type="email"
+          placeholder="m@example.com"
+          required
+        />
+      </div>
+      <div className="space-y-2">
+        <Label htmlFor="password">Password</Label>
+        <Input id="password" name="password" type="password" required />
+      </div>
+      <SubmitButton />
+      {message && (
+        <p className="mt-4 p-4 bg-destructive/10 text-destructive text-center text-sm rounded-md">
+          {message}
+        </p>
+      )}
+    </form>
+  );
+}
 
+export default function AlumniLoginPage() {
   return (
     <div className="flex flex-col min-h-dvh items-center justify-center bg-secondary p-4 relative">
         <Button variant="ghost" className="absolute top-8 left-8" asChild>
@@ -41,29 +70,9 @@ export default function AlumniLoginPage() {
             <CardDescription>Enter your credentials to access your dashboard</CardDescription>
           </CardHeader>
           <CardContent>
-            <form action={login} className="space-y-4">
-              <input type="hidden" name="role" value="alumni" />
-              <div className="space-y-2">
-                <Label htmlFor="email">Email</Label>
-                <Input
-                  id="email"
-                  name="email"
-                  type="email"
-                  placeholder="m@example.com"
-                  required
-                />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="password">Password</Label>
-                <Input id="password" name="password" type="password" required />
-              </div>
-              <SubmitButton />
-              {message && (
-                <p className="mt-4 p-4 bg-destructive/10 text-destructive text-center text-sm rounded-md">
-                  {message}
-                </p>
-              )}
-            </form>
+            <React.Suspense fallback={<div>Loading...</div>}>
+              <AlumniLoginForm />
+            </React.Suspense>
           </CardContent>
         </Card>
       </main>
