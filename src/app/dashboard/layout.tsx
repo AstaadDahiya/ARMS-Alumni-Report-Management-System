@@ -32,6 +32,7 @@ import {
   DollarSign,
   UserCog,
   HeartHandshake,
+  UserPlus,
 } from "lucide-react";
 import { Logo } from "@/components/ui/logo";
 import { logout } from "@/app/actions/auth";
