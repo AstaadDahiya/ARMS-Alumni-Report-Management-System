@@ -8,21 +8,19 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useFormStatus } from 'react-dom';
 import { login } from '@/app/actions/auth';
-import { useSearchParams } from 'next/navigation';
+import { useParams, useSearchParams } from 'next/navigation';
 import { ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
 import React, { useMemo } from 'react';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
-type Props = {
-  params: { role: string };
-  searchParams?: { [key: string]: string | string[] | undefined };
-};
-
-export default function LoginPage({ params }: Props) {
+export default function LoginPage() {
+  const params = useParams<{ role: string }>();
   const searchParams = useSearchParams();
+  
   const message = searchParams.get('message');
   const roleParam = params.role;
+
   const role = useMemo(() => {
     if (!roleParam) return '';
     return roleParam.charAt(0).toUpperCase() + roleParam.slice(1)
