@@ -14,21 +14,11 @@ const currentUser = alumni[0]; // mock current user
 export default function AlumniHomePage() {
   return (
     <div className="space-y-8">
-        <Card className="overflow-hidden shadow-lg">
-            <div className="relative h-48 md:h-64">
-                <Image
-                    src="https://picsum.photos/seed/alumnibanner/1200/400"
-                    alt="Alumni Banner"
-                    fill
-                    className="object-cover"
-                    data-ai-hint="university campus"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-                <div className="absolute bottom-0 left-0 p-8">
-                    <h1 className="text-4xl font-bold text-white tracking-tight">Welcome, {currentUser.name.split(' ')[0]}!</h1>
-                    <p className="mt-2 text-lg text-gray-200">Connect with your community and explore opportunities.</p>
-                </div>
-            </div>
+       <Card>
+          <CardHeader>
+            <CardTitle className="text-4xl font-bold tracking-tight">Welcome, {currentUser.name.split(' ')[0]}!</CardTitle>
+            <CardDescription className="text-lg">Connect with your community and explore opportunities.</CardDescription>
+          </CardHeader>
         </Card>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
