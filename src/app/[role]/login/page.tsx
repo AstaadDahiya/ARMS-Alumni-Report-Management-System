@@ -8,11 +8,6 @@ import { ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
-type PageProps = {
-  params: { role: string };
-  searchParams?: { [key: string]: string | string[] | undefined };
-};
-
 // Form submission button that shows a pending state
 function SubmitButton() {
   // useFormStatus is not available in Server Components, so we'll just show the static text.
@@ -24,7 +19,13 @@ function SubmitButton() {
   );
 }
 
-export default function LoginPage({ params, searchParams }: PageProps) {
+export default function LoginPage({
+  params,
+  searchParams,
+}: {
+  params: { role: string };
+  searchParams?: { [key: string]: string | string[] | undefined };
+}) {
   const message = searchParams?.message as string | undefined;
   const roleParam = params.role;
 
