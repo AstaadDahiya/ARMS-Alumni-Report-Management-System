@@ -38,13 +38,9 @@ To get a local copy up and running, follow these simple steps.
     ```
 
 3.  **Set up environment variables:**
-    Create a `.env.local` file in the root of your project and add the following environment variables. You will need to create a Supabase project and a Google AI API key.
+    Create a `.env.local` file in the root of your project and add the following environment variables. You will need to create a Google AI API key.
 
     ```env
-    # Supabase credentials for authentication and database
-    NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
-    NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
-
     # Google AI (Gemini) API Key for Genkit
     GEMINI_API_KEY=your_gemini_api_key
     ```
@@ -75,7 +71,6 @@ This project is built with a modern, robust, and scalable technology stack:
 -   **Styling**: [Tailwind CSS](https://tailwindcss.com/)
 -   **UI Components**: [ShadCN/UI](https://ui.shadcn.com/)
 -   **AI Integration**: [Genkit](https://firebase.google.com/docs/genkit) with Google Gemini
--   **Authentication & Database**: [Supabase](https://supabase.io/)
 -   **Language**: [TypeScript](https://www.typescriptlang.org/)
 -   **Linting**: [ESLint](https://eslint.org/)
 -   **Form Management**: [React Hook Form](https://react-hook-form.com/) with [Zod](https://zod.dev/) for validation
