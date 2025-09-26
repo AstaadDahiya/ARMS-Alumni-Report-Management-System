@@ -4,7 +4,6 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, UserPlus } from 'lucide-react';
-import Image from 'next/image';
 import Link from 'next/link';
 import { alumni } from '@/lib/mock-data';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
@@ -46,19 +45,6 @@ export default function AlumniHomePage() {
                                 </Link>
                             </Button>
                         </CardFooter>
-                    </Card>
-                    <Card>
-                        <CardHeader>
-                            <CardTitle>Become a Mentor</CardTitle>
-                            <CardDescription>Share your expertise and give back to the community.</CardDescription>
-                        </CardHeader>
-                        <CardContent>
-                            <Button variant="outline" asChild className="w-full">
-                                <Link href="/dashboard/mentorship">
-                                    Join the Program <UserPlus className="ml-2 h-4 w-4" />
-                                </Link>
-                            </Button>
-                        </CardContent>
                     </Card>
                 </div>
            </div>
