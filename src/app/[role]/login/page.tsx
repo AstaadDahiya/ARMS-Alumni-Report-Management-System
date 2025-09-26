@@ -18,7 +18,10 @@ export default function LoginPage({ params }: { params: { role: string } }) {
   const searchParams = useSearchParams();
   const message = searchParams.get('message');
   const roleParam = params.role;
-  const role = useMemo(() => roleParam.charAt(0).toUpperCase() + roleParam.slice(1), [roleParam]);
+  const role = useMemo(() => {
+    if (!roleParam) return '';
+    return roleParam.charAt(0).toUpperCase() + roleParam.slice(1)
+  }, [roleParam]);
 
   function SubmitButton() {
     const { pending } = useFormStatus();
