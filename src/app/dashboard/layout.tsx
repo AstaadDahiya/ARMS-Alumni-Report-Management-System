@@ -47,6 +47,8 @@ const adminNavItems = [
   { href: "/dashboard/donations", icon: DollarSign, label: "Donations" },
   { href: "/dashboard/news-and-updates", icon: Newspaper, label: "News and Updates" },
   { href: "/dashboard/mentorship-requests", icon: UserPlus, label: "Mentorship Requests" },
+  { href: "/dashboard/settings", icon: Settings, label: "Settings" },
+  { href: "/dashboard/contact-us", icon: CircleHelp, label: "Contact Us" },
 ];
 
 const alumniNavItems = [
@@ -56,10 +58,7 @@ const alumniNavItems = [
 
 ];
 
-const secondaryNavItems = [
-    { href: "/dashboard/settings", icon: Settings, label: "Settings" },
-    { href: "/dashboard/contact-us", icon: CircleHelp, label: "Contact Us" },
-]
+const secondaryNavItems = [] as const;
 
 export default function DashboardLayout({ children }: { children: ReactNode }) {
   const pathname = usePathname();
@@ -69,7 +68,7 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
   }
 
   // A simple way to determine role. In a real app, you'd get this from session.
-  const isAdminPath = pathname.startsWith('/dashboard/admin') || pathname.startsWith('/dashboard/directory') || pathname.startsWith('/dashboard/events') || pathname.startsWith('/dashboard/job-board') || pathname.startsWith('/dashboard/donations') || pathname.startsWith('/dashboard/news-and-updates') || pathname.startsWith('/dashboard/update-requests') || pathname.startsWith('/dashboard/mentorship-requests');
+  const isAdminPath = pathname.startsWith('/dashboard/admin') || pathname.startsWith('/dashboard/directory') || pathname.startsWith('/dashboard/events') || pathname.startsWith('/dashboard/job-board') || pathname.startsWith('/dashboard/donations') || pathname.startsWith('/dashboard/news-and-updates') || pathname.startsWith('/dashboard/update-requests') || pathname.startsWith('/dashboard/mentorship-requests') || pathname.startsWith('/dashboard/settings') || pathname.startsWith('/dashboard/contact-us');
   
   const userRole = isAdminPath ? 'admin' : 'alumni';
   
