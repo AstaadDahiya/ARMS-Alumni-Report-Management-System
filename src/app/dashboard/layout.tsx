@@ -67,7 +67,7 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
   }
 
   // A simple way to determine role. In a real app, you'd get this from session.
-  const isAdminPath = pathname.startsWith('/dashboard/admin') || pathname.startsWith('/dashboard/update-requests') || pathname.startsWith('/dashboard/mentorship-requests');
+  const isAdminPath = pathname.startsWith('/dashboard/admin') || pathname.startsWith('/dashboard/directory') || pathname.startsWith('/dashboard/events') || pathname.startsWith('/dashboard/job-board') || pathname.startsWith('/dashboard/donations') || pathname.startsWith('/dashboard/news-and-updates') || pathname.startsWith('/dashboard/update-requests') || pathname.startsWith('/dashboard/mentorship-requests');
   
   const userRole = isAdminPath ? 'admin' : 'alumni';
   

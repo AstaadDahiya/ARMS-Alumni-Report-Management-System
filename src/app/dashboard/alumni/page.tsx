@@ -3,19 +3,13 @@
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { ArrowRight, Briefcase, Calendar, Folder, UserPlus } from 'lucide-react';
+import { ArrowRight, Briefcase, Calendar, Folder, UserPlus, HeartHandshake } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { alumni } from '@/lib/mock-data';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 
 const currentUser = alumni[0]; // mock current user
-
-const quickLinks = [
-    { label: "Find other Alumni", href: "/dashboard/directory", icon: Folder },
-    { label: "Upcoming Events", href: "/dashboard/events", icon: Calendar },
-    { label: "Job Board", href: "/dashboard/job-board", icon: Briefcase },
-];
 
 export default function AlumniHomePage() {
   return (
@@ -41,19 +35,23 @@ export default function AlumniHomePage() {
            <div className="md:col-span-2">
                 <Card>
                     <CardHeader>
-                        <CardTitle>Quick Links</CardTitle>
+                        <CardTitle>Get Involved</CardTitle>
                     </CardHeader>
-                    <CardContent className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                       {quickLinks.map(link => (
-                         <Link href={link.href} key={link.href} className="block group">
+                    <CardContent className="grid sm:grid-cols-1 gap-4">
+                         <Link href="/dashboard/mentorship" className="block group">
                             <Card className="h-full hover:bg-muted/50 transition-colors">
-                                <CardContent className="p-6 flex flex-col items-center text-center">
-                                    <link.icon className="h-10 w-10 text-primary mb-3"/>
-                                    <h3 className="font-semibold">{link.label}</h3>
+                                <CardContent className="p-6 flex items-center">
+                                    <div className="p-3 bg-primary/10 text-primary rounded-lg mr-4">
+                                       <HeartHandshake className="h-8 w-8"/>
+                                    </div>
+                                    <div>
+                                       <h3 className="font-semibold text-lg">Mentorship Program</h3>
+                                       <p className="text-muted-foreground text-sm">Guide current students or find a mentor for yourself.</p>
+                                    </div>
+                                    <ArrowRight className="h-5 w-5 ml-auto text-muted-foreground group-hover:translate-x-1 transition-transform" />
                                 </CardContent>
                             </Card>
                          </Link>
-                       ))}
                     </CardContent>
                 </Card>
            </div>
@@ -78,17 +76,6 @@ export default function AlumniHomePage() {
                             <Link href="/dashboard/profile">
                                 View & Edit Profile <ArrowRight className="ml-2 h-4 w-4" />
                             </Link>
-                         </Button>
-                    </CardContent>
-                </Card>
-                 <Card>
-                    <CardHeader>
-                        <CardTitle>Mentorship Program</CardTitle>
-                        <CardDescription>Give back by guiding current students.</CardDescription>
-                    </CardHeader>
-                    <CardContent>
-                         <Button variant="outline" className="w-full">
-                            <UserPlus className="mr-2 h-4 w-4" /> Become a Mentor
                          </Button>
                     </CardContent>
                 </Card>
