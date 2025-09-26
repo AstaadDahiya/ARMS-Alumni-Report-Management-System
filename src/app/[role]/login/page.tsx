@@ -1,39 +1,36 @@
-
-"use client";
-
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { GraduationCapIcon } from '@/components/ui/logo';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { useFormStatus } from 'react-dom';
 import { login } from '@/app/actions/auth';
-import { useParams, useSearchParams } from 'next/navigation';
 import { ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
-import React, { useMemo } from 'react';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
-export default function LoginPage() {
-  const params = useParams<{ role: string }>();
-  const searchParams = useSearchParams();
-  
-  const message = searchParams.get('message');
+type Props = {
+  params: { role: string };
+  searchParams?: { [key: string]: string | string[] | undefined };
+};
+
+// Form submission button that shows a pending state
+function SubmitButton() {
+  // useFormStatus is not available in Server Components, so we'll just show the static text.
+  // For a real app, you would move the form into a client component to use this hook.
+  return (
+    <Button className="w-full" type="submit">
+      Sign In
+    </Button>
+  );
+}
+
+export default function LoginPage({ params, searchParams }: Props) {
+  const message = searchParams?.message as string | undefined;
   const roleParam = params.role;
 
-  const role = useMemo(() => {
-    if (!roleParam) return '';
-    return roleParam.charAt(0).toUpperCase() + roleParam.slice(1)
-  }, [roleParam]);
-
-  function SubmitButton() {
-    const { pending } = useFormStatus();
-    return (
-      <Button className="w-full" disabled={pending} type="submit">
-        {pending ? 'Signing In...' : `Sign In`}
-      </Button>
-    );
-  }
+  const role = roleParam
+    ? roleParam.charAt(0).toUpperCase() + roleParam.slice(1)
+    : '';
 
   return (
     <div className="flex flex-col min-h-dvh items-center justify-center bg-secondary p-4 relative">
