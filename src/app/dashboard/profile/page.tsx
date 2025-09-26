@@ -94,18 +94,9 @@ export default function ProfilePage() {
         <h1 className="text-3xl font-bold">My Profile</h1>
         <p className="text-muted-foreground">View and manage your personal information.</p>
       </div>
-      <Card className="overflow-hidden">
-        <div className="relative h-32 md:h-48">
-          <Image 
-            src="https://picsum.photos/seed/banner/1200/400"
-            alt="Profile banner"
-            fill
-            className="object-cover"
-            data-ai-hint="abstract banner"
-          />
-        </div>
-        <div className="px-6 pb-6">
-          <div className="flex flex-col sm:flex-row items-start -mt-16 sm:-mt-20">
+      <Card>
+        <CardHeader className="p-6">
+           <div className="flex flex-col sm:flex-row items-start">
             <Avatar className="h-32 w-32 border-4 border-background">
               <AvatarImage src={currentUser.avatarUrl} data-ai-hint="user avatar" />
               <AvatarFallback>{currentUser.name.charAt(0)}</AvatarFallback>
@@ -124,7 +115,7 @@ export default function ProfilePage() {
               </div>
             </div>
           </div>
-        </div>
+        </CardHeader>
       </Card>
       
       {isEditing ? (
