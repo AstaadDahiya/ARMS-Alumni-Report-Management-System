@@ -14,7 +14,12 @@ import Link from 'next/link';
 import React, { useMemo } from 'react';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
-export default function LoginPage({ params }: { params: { role: string } }) {
+type Props = {
+  params: { role: string };
+  searchParams?: { [key: string]: string | string[] | undefined };
+};
+
+export default function LoginPage({ params }: Props) {
   const searchParams = useSearchParams();
   const message = searchParams.get('message');
   const roleParam = params.role;
