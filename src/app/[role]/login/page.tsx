@@ -1,3 +1,6 @@
+
+"use client";
+
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { GraduationCapIcon } from '@/components/ui/logo';
@@ -7,26 +10,24 @@ import { login } from '@/app/actions/auth';
 import { ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { useParams, useSearchParams } from 'next/navigation';
+import { useFormStatus } from 'react-dom';
 
 // Form submission button that shows a pending state
 function SubmitButton() {
-  // useFormStatus is not available in Server Components, so we'll just show the static text.
-  // For a real app, you would move the form into a client component to use this hook.
+  const { pending } = useFormStatus();
   return (
-    <Button className="w-full" type="submit">
-      Sign In
+    <Button className="w-full" type="submit" disabled={pending}>
+      {pending ? 'Signing In...' : 'Sign In'}
     </Button>
   );
 }
 
-export default function LoginPage({
-  params,
-  searchParams,
-}: {
-  params: { role: string };
-  searchParams?: { [key: string]: string | string[] | undefined };
-}) {
-  const message = searchParams?.message as string | undefined;
+export default function LoginPage() {
+  const params = useParams<{ role: string }>();
+  const searchParams = useSearchParams();
+
+  const message = searchParams.get('message');
   const roleParam = params.role;
 
   const role = roleParam
