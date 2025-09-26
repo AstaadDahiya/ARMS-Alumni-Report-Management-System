@@ -111,23 +111,6 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
               ))}
           </SidebarMenu>
           <div className="flex-grow" />
-           <SidebarMenu>
-            {secondaryNavItems.map((item) => (
-              <SidebarMenuItem key={item.href}>
-                <SidebarMenuButton
-                  asChild
-                  isActive={pathname.startsWith(item.href)}
-                  className="h-10 justify-start data-[active=true]:bg-sidebar-primary data-[active=true]:text-sidebar-primary-foreground data-[active=true]:shadow-sm hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
-                  tooltip={{ children: item.label, side: "right", align:"center" }}
-                >
-                  <Link href={item.href}>
-                    <item.icon />
-                    <span>{item.label}</span>
-                  </Link>
-                </SidebarMenuButton>
-              </SidebarMenuItem>
-            ))}
-          </SidebarMenu>
         </SidebarContent>
         <SidebarFooter className="p-4 bg-sidebar-accent/50 rounded-lg m-2">
             <div className="flex items-center justify-between">
