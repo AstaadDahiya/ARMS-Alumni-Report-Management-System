@@ -23,7 +23,6 @@ import {
   Newspaper,
   Settings,
   CircleHelp,
-  HeartHandshake,
   LogOut,
   Bell,
   Folder,
@@ -32,6 +31,7 @@ import {
   Home,
   DollarSign,
   UserCog,
+  HeartHandshake,
 } from "lucide-react";
 import { Logo } from "@/components/ui/logo";
 import { logout } from "@/app/actions/auth";
@@ -43,15 +43,17 @@ const adminNavItems = [
   { href: "/dashboard/directory", icon: Folder, label: "Alumni Directory" },
   { href: "/dashboard/events", icon: Calendar, label: "Events" },
   { href: "/dashboard/job-board", icon: Briefcase, label: "Job Board" },
-  { href: "/dashboard/mentorship", icon: HeartHandshake, label: "Mentorship" },
   { href: "/dashboard/donations", icon: DollarSign, label: "Donations" },
   { href: "/dashboard/news-and-updates", icon: Newspaper, label: "News and Updates" },
+  { href: "/dashboard/mentorship", icon: HeartHandshake, label: "Mentorship" },
+  { href: "/dashboard/mentorship-requests", icon: UserPlus, label: "Mentorship Requests" },
 ];
 
 const alumniNavItems = [
     { href: "/dashboard/alumni", icon: Home, label: "Alumni Home" },
     { href: "/dashboard/profile", icon: UserCog, label: "Profile" },
     { href: "/dashboard/mentorship", icon: HeartHandshake, label: "Mentorship" },
+
 ];
 
 const secondaryNavItems = [
