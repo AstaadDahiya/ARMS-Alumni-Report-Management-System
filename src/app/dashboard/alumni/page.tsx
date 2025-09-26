@@ -1,9 +1,9 @@
 
 "use client";
 
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { ArrowRight, Briefcase, Calendar, Folder, UserPlus, HeartHandshake } from 'lucide-react';
+import { ArrowRight, UserPlus } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { alumni } from '@/lib/mock-data';
@@ -49,13 +49,13 @@ export default function AlumniHomePage() {
                                 <p className="text-sm text-muted-foreground">{currentUser.jobTitle}</p>
                             </div>
                         </CardContent>
-                        <CardContent>
+                        <CardFooter>
                             <Button asChild className="w-full">
                                 <Link href="/dashboard/profile">
                                     View & Edit Profile <ArrowRight className="ml-2 h-4 w-4" />
                                 </Link>
                             </Button>
-                        </CardContent>
+                        </CardFooter>
                     </Card>
                     <Card>
                         <CardHeader>
