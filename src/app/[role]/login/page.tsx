@@ -8,7 +8,7 @@ import { ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
-type Props = {
+type PageProps = {
   params: { role: string };
   searchParams?: { [key: string]: string | string[] | undefined };
 };
@@ -24,7 +24,7 @@ function SubmitButton() {
   );
 }
 
-export default function LoginPage({ params, searchParams }: Props) {
+export default function LoginPage({ params, searchParams }: PageProps) {
   const message = searchParams?.message as string | undefined;
   const roleParam = params.role;
 
