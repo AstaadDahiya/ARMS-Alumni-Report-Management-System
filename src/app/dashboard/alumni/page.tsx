@@ -32,84 +32,46 @@ export default function AlumniHomePage() {
         </Card>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-           <div className="md:col-span-2">
-                <div className="grid sm:grid-cols-2 gap-6">
-                    <Link href="/dashboard/directory" className="block group">
-                        <Card className="h-full hover:bg-muted/50 transition-colors">
-                             <CardContent className="p-6 flex flex-col items-center text-center">
-                                <Folder className="h-12 w-12 text-primary mb-4" />
-                                <h3 className="font-semibold text-xl">Alumni Directory</h3>
-                                <p className="text-muted-foreground text-sm mt-1">Search and connect with fellow alumni.</p>
-                             </CardContent>
-                        </Card>
-                    </Link>
-                    <Link href="/dashboard/job-board" className="block group">
-                        <Card className="h-full hover:bg-muted/50 transition-colors">
-                            <CardContent className="p-6 flex flex-col items-center text-center">
-                                <Briefcase className="h-12 w-12 text-primary mb-4" />
-                                <h3 className="font-semibold text-xl">Job Board</h3>
-                                <p className="text-muted-foreground text-sm mt-1">Find career opportunities within the network.</p>
-                            </CardContent>
-                        </Card>
-                    </Link>
-                     <Link href="/dashboard/events" className="block group">
-                        <Card className="h-full hover:bg-muted/50 transition-colors">
-                             <CardContent className="p-6 flex flex-col items-center text-center">
-                                <Calendar className="h-12 w-12 text-primary mb-4" />
-                                <h3 className="font-semibold text-xl">Events</h3>
-                                <p className="text-muted-foreground text-sm mt-1">Join upcoming reunions and webinars.</p>
-                            </CardContent>
-                        </Card>
-                    </Link>
-                     <Link href="/dashboard/mentorship" className="block group">
-                        <Card className="h-full hover:bg-muted/50 transition-colors">
-                            <CardContent className="p-6 flex flex-col items-center text-center">
-                               <HeartHandshake className="h-12 w-12 text-primary mb-4"/>
-                                <h3 className="font-semibold text-xl">Mentorship</h3>
-                               <p className="text-muted-foreground text-sm mt-1">Guide students or find a mentor.</p>
-                            </CardContent>
-                        </Card>
-                     </Link>
+           <div className="md:col-span-3">
+                <div className="space-y-6">
+                    <Card>
+                        <CardHeader>
+                            <CardTitle>Your Profile</CardTitle>
+                            <CardDescription>Keep your information up-to-date.</CardDescription>
+                        </CardHeader>
+                        <CardContent className="flex items-center gap-4">
+                            <Avatar className="h-16 w-16">
+                                <AvatarImage src={currentUser.avatarUrl} data-ai-hint="user avatar" />
+                                <AvatarFallback>{currentUser.name.charAt(0)}</AvatarFallback>
+                            </Avatar>
+                            <div>
+                                <p className="font-semibold">{currentUser.name}</p>
+                                <p className="text-sm text-muted-foreground">{currentUser.jobTitle}</p>
+                            </div>
+                        </CardContent>
+                        <CardContent>
+                            <Button asChild className="w-full">
+                                <Link href="/dashboard/profile">
+                                    View & Edit Profile <ArrowRight className="ml-2 h-4 w-4" />
+                                </Link>
+                            </Button>
+                        </CardContent>
+                    </Card>
+                    <Card>
+                        <CardHeader>
+                            <CardTitle>Become a Mentor</CardTitle>
+                            <CardDescription>Share your expertise and give back to the community.</CardDescription>
+                        </CardHeader>
+                        <CardContent>
+                            <Button variant="outline" asChild className="w-full">
+                                <Link href="/dashboard/mentorship">
+                                    Join the Program <UserPlus className="ml-2 h-4 w-4" />
+                                </Link>
+                            </Button>
+                        </CardContent>
+                    </Card>
                 </div>
            </div>
-            <div className="space-y-6">
-                <Card>
-                    <CardHeader>
-                        <CardTitle>Your Profile</CardTitle>
-                        <CardDescription>Keep your information up-to-date.</CardDescription>
-                    </CardHeader>
-                    <CardContent className="flex items-center gap-4">
-                        <Avatar className="h-16 w-16">
-                            <AvatarImage src={currentUser.avatarUrl} data-ai-hint="user avatar" />
-                            <AvatarFallback>{currentUser.name.charAt(0)}</AvatarFallback>
-                        </Avatar>
-                        <div>
-                            <p className="font-semibold">{currentUser.name}</p>
-                            <p className="text-sm text-muted-foreground">{currentUser.jobTitle}</p>
-                        </div>
-                    </CardContent>
-                    <CardContent>
-                         <Button asChild className="w-full">
-                            <Link href="/dashboard/profile">
-                                View & Edit Profile <ArrowRight className="ml-2 h-4 w-4" />
-                            </Link>
-                         </Button>
-                    </CardContent>
-                </Card>
-                 <Card>
-                    <CardHeader>
-                        <CardTitle>Become a Mentor</CardTitle>
-                        <CardDescription>Share your expertise and give back to the community.</CardDescription>
-                    </CardHeader>
-                    <CardContent>
-                         <Button variant="outline" asChild className="w-full">
-                            <Link href="/dashboard/mentorship">
-                                Join the Program <UserPlus className="ml-2 h-4 w-4" />
-                            </Link>
-                         </Button>
-                    </CardContent>
-                </Card>
-            </div>
         </div>
     </div>
   );
